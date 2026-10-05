@@ -1,0 +1,3 @@
+Station,CraftName,WorkType,PrimarySkill,SecondarySkill,Attribute,Difficulty,MoodType,Workload,Resources Needed to Build,Metal Resource,Wires Resource,Plastic Resource,Fuel resource,Outcome,Description,BaseBuffs
+Expert Guard Station,High Damage Ammunition,start,PhysicalSkill.Firearms,PhysicalSkill.Mechanical,PhysicalAttribute.Agility,4,arousal,6,"Metal 10, Fuel 10",10,,,10,,"High Damage Ammunition is a specialized ordnance crafted from metal alloys and industrial salvage fuel, designed to overcome the nanobots' furious repair of the infected by delivering the total physical destruction required",Safety
+Expert Guard Station,High Damage Ammunition,finish,PhysicalSkill.Firearms,PhysicalSkill.Mechanical,MentalAttribute.Focus,4,valence,6,,,,,,20 High damage Ammunition,,Safety

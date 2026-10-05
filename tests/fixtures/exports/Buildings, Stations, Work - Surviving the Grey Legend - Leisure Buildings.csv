@@ -1,0 +1,39 @@
+BuildingName,Type,Activity,Temperament,CoreNeed,Description,Participation,Capacity,BaseBuffs,Area Requirements,Metal Resource,Wires Resource,Plastic Resource,Fuel resource,Electricity Requirements,ResearchRequirement,Notes
+Bar,Leisure Building,,,,"A rough counter, mismatched stools and a still; where the base talks.",,4,Unity,Medium Building Slot,30,10,15,10,1,,"Communication domain. Cost, capacity, electricity are placeholders"
+Bar,Activity,Drink,SJ,"Membership, Duty",A shared drink; belonging through simply showing up.,Open invite,,,,,,,,,,
+Bar,Activity,Speech,SP,"Impact, Performance",Holding a speech; influence and performance.,Open invite,,,,,,,,,,
+Bar,Activity,Topical Discussion,NT,"Mastery, Knowledge",Debate as a competence display.,Open invite,,,,,,,,,,
+Bar,Activity,Real Conversation,NF,"Meaning, Connection",A real talk with a partner (or Tend Atmosphere when alone).,Partner,,,,,,,,,,D52 also lists Tend Atmosphere (solo) as a second NF option
+Library,Leisure Building,,,,"Shelves of salvaged books, journals and a reading lamp.",,3,Science,Medium Building Slot,20,15,25,5,1,,Research domain
+Library,Activity,Join Others in Reading,SJ,"Membership, Duty",One character reads aloud; idle characters nearby may join.,Open invite,,,,,,,,,,
+Library,Activity,Present Findings,SP,"Impact, Performance",Gated on a real finished Research or Crafting contribution.,Solo + audience,,,,,,,,,,Needs a hook to completed work (4.3)
+Library,Activity,Study,NT,"Mastery, Knowledge",Solo technical reading.,Solo,,,,,,,,,,
+Library,Activity,Search Archives,NF,"Meaning, Connection",Old family history and journals among the salvage.,Solo,,,,,,,,,,
+Hobby Workshop,Leisure Building,,,,"A fenced pile and a bench; leisure tinkering, not production.",,3,Tech,Small Building Slot,20,5,5,0,0,,Mechanical domain
+Hobby Workshop,Activity,Communal Salvage Run,SJ,"Membership, Duty",Sorting the pile together.,Open invite,,,,,,,,,,
+Hobby Workshop,Activity,Freeform Tinkering,SP,"Impact, Performance",Building something nobody asked for.,Solo,,,,,,,,,,
+Hobby Workshop,Activity,Identify Rare Find,NT,"Mastery, Knowledge",Mastery is recognising value others walked past.,Solo,,,,,,,,,,
+Hobby Workshop,Activity,Make Keepsake,NF,"Meaning, Connection",Turning junk into something personally meaningful.,Solo,,,,,,,,,,
+Garden,Leisure Building,,,,"Whatever soil and sun the base can spare; a leisure space, not production.",,4,Survival,Medium Building Slot,10,0,25,5,0,,Food domain
+Garden,Activity,Organize Event,SJ,"Membership, Duty",One character starts a small gathering; others may join.,Open invite,,,,,,,,,,D52 flagged organizing as too close to Work; owner to confirm
+Garden,Activity,Tend Garden,SP,"Impact, Performance","Personal tending, not production.",Solo,,,,,,,,,,
+Garden,Activity,Physical Training,NT,"Mastery, Knowledge","Using the space for exercise, not agriculture.",Solo,,,,,,,,,,
+Garden,Activity,Dabble with Remembered Plants,NF,"Meaning, Connection",Tied to the character's own background.,Solo,,,,,,,,,,
+Sauna,Leisure Building,,,,A fuel-heated sauna and sports corner.,,4,Well-Being,Medium Building Slot,25,10,20,25,1,,Medical domain
+Sauna,Activity,Socialize,SJ,"Membership, Duty",Checks in on whoever is already there; no organizing.,Open invite,,,,,,,,,,
+Sauna,Activity,Intense Exercise,SP,"Impact, Performance","Personal physical achievement, not recovery.",Solo,,,,,,,,,,
+Sauna,Activity,Meditation,NT,"Mastery, Knowledge",Controlled breathing; mastery over body and mind.,Solo,,,,,,,,,,
+Sauna,Activity,Quiet Reflection,NF,"Meaning, Connection","Solo, in the warmth.",Solo,,,,,,,,,,
+Shooting Club,Leisure Building,,,,A taped-off lane and a rack of dummies; not a watch-post.,,3,Safety,Small Building Slot,25,5,10,5,0,,Firearms domain
+Shooting Club,Activity,Learn Guarding & Self-Defense,SJ,"Membership, Duty","Training, not standing a real watch.",Open invite,,,,,,,,,,
+Shooting Club,Activity,Target Practice,SP,"Impact, Performance",Showing off a skill.,Solo + audience,,,,,,,,,,
+Shooting Club,Activity,Tactical Drills,NT,"Mastery, Knowledge",Drills and tactics.,Solo,,,,,,,,,,
+Shooting Club,Activity,Fireside War-Story Swap,NF,"Meaning, Connection",Processing fear and loss collectively.,Open invite,,,,,,,,,,
+Base,,,,,,,,,,,,,,,,
+Base,Activity,Wandering,Any,Freedom to Act,Universal; not tied to a building or skill. Uses the navmesh and wander points.,Solo,,,,,,,,,,Always available
+Base,Activity,Tidying Up,Any,Freedom to Act,Universal; not tied to a building or skill. Uses the navmesh to go around buildings and work stations,Solo,,,,,,,,,,Always available
+Base,Activity,Check on Neighbors,SJ,"Membership, Duty",Walks the base to see that everyone is alright,Open Invite,,,,,,,,,,
+Base,Activity,Play Games,SP,"Impact, Performance","Cards, dice and bets over scrap-metal chips.",Open Invite,,,,,,,,,,
+Base,Activity,Solve Puzzles,NT,"Mastery, Knowledge","Locks, riddles and salvaged brain-teasers.",Solo,,,,,,,,,,
+Base,Activity,Write Journal,NF,"Meaning, Connection",Putting the day into words.,Solo,,,,,,,,,,
+Base,Activity,Rest,Any,Freedom to Act,A neutral fallback for every temperament,Solo,,,,,,,,,,

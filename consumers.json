@@ -1,0 +1,37 @@
+{
+  "_doc": "Where import_data.py copies design/data files. Paths: 'from' is relative to design/data, 'to' to the consumer root. 'enabled': false = listed for the plan but never written (owner has not approved writes to that repo yet). `import_data.py --check` fails if an enabled copy differs from design/data.",
+  "consumers": {
+    "CopperGame": {
+      "root": "../CopperGame",
+      "enabled": true,
+      "files": [
+        {"from": "basebuilding/*.json", "to": "data/basebuilding/"},
+        {"from": "basebuilding/schemas/*.json", "to": "data/basebuilding/schemas/"},
+        {"from": "docs/basebuilding/tag-registry.md", "to": "docs/porting/tag-registry.md"},
+        {"from": "docs/basebuilding/tags-for-unreal-lead.md", "to": "docs/porting/tags-for-unreal-lead.md"}
+      ]
+    },
+    "CopperShared": {
+      "root": "../CopperShared",
+      "enabled": false,
+      "files": [
+        {"from": "character/Background*.json", "to": "data/character_gen/"}
+      ]
+    },
+    "CopperLegend": {
+      "root": "../CopperLegend",
+      "enabled": false,
+      "files": [
+        {"from": "character/Background*.json", "to": "designer_data/sources/"}
+      ]
+    },
+    "Unreal": {
+      "root": "unreal_staging",
+      "enabled": false,
+      "files": [
+        {"from": "Attribute.json", "to": "Data/"},
+        {"from": "character/Background*.json", "to": "Data/"}
+      ]
+    }
+  }
+}
