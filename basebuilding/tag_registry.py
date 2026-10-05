@@ -24,7 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # tools/: pipeline_common
 
-from pipeline_common import DATA_DIR, DOCS_OUT_DIR, STAT_TAGS, source_file, write_json
+from pipeline_common import DATA_DIR, DOCS_OUT_DIR, STAT_TAGS, registry_entries, source_file, write_json
 
 BB_TAGS_JSON = source_file("BaseBuildingTags.json")
 REGISTRY_DEST = DATA_DIR / "basebuilding" / "TagRegistry.json"
@@ -62,7 +62,7 @@ def split_list(value) -> list:
 class TagRegistry:
     def __init__(self):
         self.entries = [dict(e, Kind="Stat") for e in STAT_TAGS.entries]
-        self.entries += json.loads(BB_TAGS_JSON.read_text(encoding="utf-8"))
+        self.entries += registry_entries()
         self.lookup = {}  # kind -> normalized name -> Tag
         self.names = {}   # Tag -> display name
         for e in self.entries:
@@ -80,7 +80,7 @@ class TagRegistry:
             tag, kind = e["Tag"], e["Kind"]
             if kind != "Stat" and kind not in KIND_PREFIX:
                 errors.append(f'{tag}: unknown Kind "{kind}"')
-            elif kind != "Stat" and not tag.startswith(KIND_PREFIX[kind]):
+            elif kind != "Stat" and "Registry" not in e and not tag.startswith(KIND_PREFIX[kind]):  # owner files set their own namespace
                 errors.append(f"{tag}: a {kind} Tag must start with {KIND_PREFIX[kind]}")
             if not _TAG.match(tag):
                 errors.append(f"{tag}: not a dotted Tag")
@@ -162,9 +162,10 @@ class TagRegistry:
         row["ResourcesNeededToBuildTags"] = self.quantities(
             "Resource", row.get("ResourcesNeededToBuild"), where + ":ResourcesNeededToBuild")
 
-    @staticmethod
-    def job_name(row: dict) -> str:
-        return f'{row["BuildingName"]} / {row["Work"] or "(research spend)"}'
+    def job_name(self, row: dict) -> str:
+        """'Medical Station / Treat Wounds'; the station cell may hold the station's Tag."""
+        station = self.names.get(row["BuildingName"], row["BuildingName"])
+        return f'{station} / {row["Work"] or "(research spend)"}'
 
     def tag_work_row(self, row: dict, source: str) -> None:
         where = f"{source}:{self.job_name(row)}"
@@ -198,7 +199,8 @@ class TagRegistry:
         def ref(table, field, row_name, names, kinds):
             tags = []
             for name in (names if isinstance(names, list) else split_list(names)):
-                tag = next((t for k in kinds if (t := self.lookup[k].get(_norm(name)))), None)
+                tag = name if self._kind_of(name) in kinds else None  # the cell already holds the Tag
+                tag = tag or next((t for k in kinds if (t := self.lookup[k].get(_norm(name)))), None)
                 if tag is None:
                     self.errors.append(f'{table}.{field}: "{row_name}" refers to "{name}", which does not exist')
                 else:

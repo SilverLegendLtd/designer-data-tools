@@ -37,6 +37,21 @@ def source_file(name: str) -> Path:
     return SOURCES_DIR / name
 
 
+REGISTRIES_DIR = SOURCES_DIR / "registries"
+
+
+def registry_entries() -> list[dict]:
+    """Every non-stat Tag: sources/registries/<Kind>.json (Attribute.json shape: Name, Tag, DevComment,
+    optional Aliases) replaces that Kind's rows in sources/BaseBuildingTags.json, kind by kind."""
+    entries = json.loads((SOURCES_DIR / "BaseBuildingTags.json").read_text(encoding="utf-8"))
+    files = sorted(REGISTRIES_DIR.glob("*.json")) if REGISTRIES_DIR.exists() else []
+    replaced = {f.stem for f in files}
+    entries = [e for e in entries if e["Kind"] not in replaced]
+    for f in files:
+        entries += [dict(e, Kind=f.stem, Registry=f.name) for e in json.loads(f.read_text(encoding="utf-8"))]
+    return entries
+
+
 def load_csv_rows(path: Path) -> list[dict]:
     if not path.exists():
         raise SystemExit(f"IMPORT FAILED: missing input {path} -- run the sheet export "

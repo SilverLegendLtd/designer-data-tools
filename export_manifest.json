@@ -1,5 +1,6 @@
 {
   "_doc": "Which Google Sheets tabs apps_script/ExportSheets.gs exports to Design/exports as '<spreadsheet> - <tab>.csv'. import_data.py copies this file to the exports folder so the script reads the same list. Spreadsheets are found by exact title.",
+  "strict_tags": false,
   "exports": [
     {"spreadsheet": "Buildings, Stations, Work - Surviving the Grey Legend", "tab": "New Buildings"},
     {"spreadsheet": "Buildings, Stations, Work - Surviving the Grey Legend", "tab": "Crafting List"},

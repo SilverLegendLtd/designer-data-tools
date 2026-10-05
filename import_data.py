@@ -25,7 +25,10 @@ TOOLS_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS_DIR))
 sys.path.insert(0, str(TOOLS_DIR / "basebuilding"))
 
-from pipeline_common import DATA_DIR, EXPORTS_DIR, GAME_DESIGN_ROOT, export_csv, write_json  # noqa: E402
+import csv  # noqa: E402
+
+import sheet_rules  # noqa: E402
+from pipeline_common import ATTRIBUTE_JSON, DATA_DIR, EXPORTS_DIR, GAME_DESIGN_ROOT, export_csv, registry_entries, write_json  # noqa: E402
 
 CONSUMERS_JSON = TOOLS_DIR / "consumers.json"
 EXPORT_MANIFEST = TOOLS_DIR / "export_manifest.json"
@@ -39,6 +42,48 @@ def _fail_if(what: str, problems: list) -> None:
         for line in dict.fromkeys(problems[:60]):
             print("  " + line)
         sys.exit(1)
+
+
+def registries() -> dict:
+    """Every Tag list the sheets may reference, by kind (also published for the Apps Script)."""
+    kinds = {"Stat": [{"Tag": e["Tag"], "Name": e["Name"]} for e in
+                      json.loads(ATTRIBUTE_JSON.read_text(encoding="utf-8"))]}
+    for e in registry_entries():
+        kinds.setdefault(e["Kind"], []).append({"Tag": e["Tag"], "Name": e["Name"], "Aliases": e.get("Aliases", [])})
+    background = export_csv("Background Data - Background.csv")
+    if background.exists():
+        with background.open(encoding="utf-8-sig", newline="") as f:
+            kinds["Background"] = [{"Tag": r["Tag"], "Name": r["Name"]} for r in csv.DictReader(f) if r.get("Tag")]
+    return kinds
+
+
+def strict_tags() -> bool:
+    return bool(json.loads(EXPORT_MANIFEST.read_text(encoding="utf-8")).get("strict_tags"))
+
+
+def validate_exports() -> None:
+    """Cell-level check of every exported tab against sheet_rules (same rules as the Apps Script)."""
+    reg, strict = sheet_rules.Registries(registries()), strict_tags()
+    manifest = json.loads(EXPORT_MANIFEST.read_text(encoding="utf-8"))
+    problems = []
+    for entry in manifest["exports"]:
+        sheet = f'{entry["spreadsheet"]} - {entry["tab"]}'
+        path = export_csv(sheet + ".csv")
+        if not path.exists():
+            continue  # the converter reports the missing file
+        with path.open(encoding="utf-8-sig", newline="") as f:
+            rows = list(csv.reader(f))
+        if rows:
+            problems += sheet_rules.validate_rows(sheet, rows[0], rows[1:], reg, strict)
+    errors = [p for p in problems if p["level"] == "error"]
+    names = [p for p in problems if p["level"] == "warning" and p["message"].startswith("display name")]
+    if names:
+        print(f"sheet validation: {len(names)} display names where a Tag belongs "
+              f"(warnings until strict_tags is true in export_manifest.json)")
+    for p in problems:
+        if p["level"] == "warning" and p not in names:
+            print(f'  warning: {p["sheet"]} {p["cell"]}: {p["message"]}')
+    _fail_if("sheet validation", [f'{p["sheet"]} {p["cell"]}: {p["message"]}' for p in errors])
 
 
 def build_basebuilding() -> None:
@@ -96,7 +141,9 @@ def publish_manifest(create: bool = False) -> None:
         EXPORTS_DIR.mkdir(parents=True, exist_ok=True)
     if EXPORTS_DIR.exists():
         shutil.copyfile(EXPORT_MANIFEST, EXPORTS_DIR / "export_manifest.json")
-        print(f"export_manifest.json -> {EXPORTS_DIR}")
+        rules = {"strict": strict_tags(), "kinds": registries(), "sheets": sheet_rules.SHEETS}
+        write_json(EXPORTS_DIR / "validation_rules.json", rules)
+        print(f"export_manifest.json + validation_rules.json -> {EXPORTS_DIR}")
 
 
 def report_export_age() -> None:
@@ -160,6 +207,7 @@ def main() -> None:
         return
     if not args.copy:
         report_export_age()
+        validate_exports()
         build_basebuilding()
         build_character()
     if not args.build:

@@ -83,5 +83,32 @@ class ImportDataTest(unittest.TestCase):
         self.assertIn("Wellness Typo", result.stdout)
 
 
+class RegistryFileTest(unittest.TestCase):
+    """A sources/registries/<Kind>.json file replaces that Kind's rows of BaseBuildingTags.json,
+    with whatever namespace the owner chose (here Unreal's Bronze.WorkStation.Type.*)."""
+
+    def test_station_registry_file_renames_station_tags(self):
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            out = tmp / "data"
+            out.mkdir()
+            shutil.copy(DATA / "Attribute.json", out)
+            shutil.copytree(DATA / "sources", out / "sources")
+            stations = [e for e in json.loads((DATA / "sources" / "BaseBuildingTags.json").read_text(encoding="utf-8"))
+                        if e["Kind"] == "Station"]
+            renamed = [{"Name": e["Name"], "Tag": e["Tag"].replace("BB.Station.", "Bronze.WorkStation.Type."),
+                        "DevComment": e.get("DevComment", "")} for e in stations]
+            (out / "sources" / "registries").mkdir()
+            (out / "sources" / "registries" / "Station.json").write_text(json.dumps(renamed), encoding="utf-8")
+            env = {**os.environ, "DESIGN_EXPORTS_DIR": str(FIXTURE_EXPORTS), "DESIGN_DATA_DIR": str(out)}
+            result = run("--build", env=env)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            work = json.loads((out / "basebuilding" / "Work.json").read_text(encoding="utf-8"))
+            treat = next(r for r in work if r["Tag"] == "BB.Job.MedicalStation.TreatWounds")
+            self.assertEqual(treat["StationTag"], "Bronze.WorkStation.Type.MedicalStation")
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
+
 if __name__ == "__main__":
     unittest.main()
