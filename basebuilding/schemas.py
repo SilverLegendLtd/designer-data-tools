@@ -5,7 +5,7 @@ port reads (foundation plan F2).
 
 Types: string, int, number_or_item (a number, or the literal "item"),
 tag:<Kind> (a registry Tag of that Kind; Kind "Stat" = Attribute.json),
-tag_list:<Kind> (list of them), tag_map:<Kind> (Tag -> int quantity), bool, string_list.
+tag_list:<Kind> (list of them), tag_map:<Kind> (Tag -> int quantity), bool, string_list, number, stat_deltas.
 A trailing `?` allows null. Display-name columns are kept next to their Tag
 columns until the runtime switches to Tags (foundation plan F3).
 """
@@ -36,6 +36,18 @@ _BUILDING = {
 }
 
 SCHEMAS = {
+    "BaseBuildingEffects": {
+        "conventions": {"Tag": "GameplayEffect.BaseBuilding.<Name> (CopperLegend's effect format, category BaseBuilding)",
+                        "DurationHours": "game hours, linear decay (D44); null = until removed (e.g. Starving ends with a meal)",
+                        "WorkTierModifier": "changes a work check's outcome tier (-1 = one tier worse)"},
+        "columns": {"Tag": "tag:Effect", "Name": "string", "EffectType": "string",
+                    "CheckSkill": "string?", "CheckSkillTag": "tag:Stat?", "SecondaryCheckSkill": "string?", "SecondaryCheckSkillTag": "tag:Stat?",
+                    "CheckAttribute": "string?", "CheckAttributeTag": "tag:Stat?", "DurationCheckSkill": "string?", "DurationCheckSkillTag": "tag:Stat?",
+                    "DurationCheckSecondarySkill": "string?", "DurationCheckSecondarySkillTag": "tag:Stat?",
+                    "DurationCheckAttribute": "string?", "DurationCheckAttributeTag": "tag:Stat?",
+                    "Effects": "stat_deltas", "Arousal": "number?", "Valence": "number?", "WorkTierModifier": "int?",
+                    "CannotWork": "bool", "DurationHours": "int?", "AppliedBy": "string?", "Notes": "string?"},
+    },
     "Items": {
         "conventions": {"Tag": "Inventory.Item.<Name>", "CategoryTag": "Inventory.Category.*; Food items are what cooking consumes (CopperGame 0040)",
                         "Nutrition": "how many meals the item is worth when cooked, before the cook's outcome tier"},
@@ -111,6 +123,10 @@ def _ok(type_name: str, value) -> bool:
         return isinstance(value, str)
     if base == "int":
         return isinstance(value, int) and not isinstance(value, bool)
+    if base == "number":
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    if base == "stat_deltas":
+        return isinstance(value, list) and all(isinstance(v, dict) and _is_tag("Stat", v.get("StatTag")) and isinstance(v.get("Value"), (int, float)) for v in value)
     if base == "bool":
         return isinstance(value, bool)
     if base == "string_list":

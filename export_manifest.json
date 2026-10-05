@@ -10,6 +10,7 @@
     {"spreadsheet": "Background Data", "tab": "Childhood"},
     {"spreadsheet": "Background Data", "tab": "YoungAdult"},
     {"spreadsheet": "Background Data", "tab": "Adult"},
-    {"spreadsheet": "Items, Food - List", "tab": "Food Items"}
+    {"spreadsheet": "Items, Food - List", "tab": "Food Items"},
+    {"spreadsheet": "Gameplay Effects for Dialogue System", "tab": "Base Building Effects"}
   ]
 }
