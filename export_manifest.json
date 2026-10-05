@@ -9,6 +9,7 @@
     {"spreadsheet": "Background Data", "tab": "Background"},
     {"spreadsheet": "Background Data", "tab": "Childhood"},
     {"spreadsheet": "Background Data", "tab": "YoungAdult"},
-    {"spreadsheet": "Background Data", "tab": "Adult"}
+    {"spreadsheet": "Background Data", "tab": "Adult"},
+    {"spreadsheet": "Items, Food - List", "tab": "Food Items"}
   ]
 }

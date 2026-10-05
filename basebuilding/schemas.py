@@ -5,7 +5,7 @@ port reads (foundation plan F2).
 
 Types: string, int, number_or_item (a number, or the literal "item"),
 tag:<Kind> (a registry Tag of that Kind; Kind "Stat" = Attribute.json),
-tag_list:<Kind> (list of them), tag_map:<Kind> (Tag -> int quantity).
+tag_list:<Kind> (list of them), tag_map:<Kind> (Tag -> int quantity), bool, string_list.
 A trailing `?` allows null. Display-name columns are kept next to their Tag
 columns until the runtime switches to Tags (foundation plan F3).
 """
@@ -36,6 +36,12 @@ _BUILDING = {
 }
 
 SCHEMAS = {
+    "Items": {
+        "conventions": {"Tag": "Inventory.Item.<Name>", "CategoryTag": "Inventory.Category.*; Food items are what cooking consumes (CopperGame 0040)",
+                        "Nutrition": "how many meals the item is worth when cooked, before the cook's outcome tier"},
+        "columns": {"Tag": "tag:Item", "Name": "string", "Category": "string", "CategoryTag": "tag:ItemCategory",
+                    "Nutrition": "int", "Sources": "string_list", "NeedsResearch": "bool", "Notes": "string?"},
+    },
     "LeisureActivities": {
         "conventions": {"Tag": "BB.Leisure.<Building>.<Activity>; BuildingTag is null for the universal Wandering (BuildingName \"Base\")"},
         "columns": {"Tag": "tag:Leisure", "BuildingName": "string", "Activity": "string", "Temperament": "string?",
@@ -105,6 +111,10 @@ def _ok(type_name: str, value) -> bool:
         return isinstance(value, str)
     if base == "int":
         return isinstance(value, int) and not isinstance(value, bool)
+    if base == "bool":
+        return isinstance(value, bool)
+    if base == "string_list":
+        return isinstance(value, list) and all(isinstance(v, str) for v in value)
     if base == "number_or_item":
         return value == "item" or (isinstance(value, (int, float)) and not isinstance(value, bool))
     if base == "tag":
