@@ -162,8 +162,9 @@ def main() -> None:
         report_export_age()
         build_basebuilding()
         build_character()
-        publish_manifest()
     if not args.build:
+        if not args.copy:
+            publish_manifest()
         copy_to_consumers()
 
 
