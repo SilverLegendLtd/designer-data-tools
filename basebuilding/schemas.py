@@ -5,7 +5,7 @@ port reads (foundation plan F2).
 
 Types: string, int, number_or_item (a number, or the literal "item"),
 tag:<Kind> (a registry Tag of that Kind; Kind "Stat" = Attribute.json),
-tag_list:<Kind> (list of them), tag_map:<Kind> (Tag -> int quantity), bool, string_list, number, stat_deltas.
+tag_list:<Kind> (list of them), tag_map:<Kind> (Tag -> int quantity), bool, string_list, number, stat_deltas, list, dict.
 A trailing `?` allows null. Display-name columns are kept next to their Tag
 columns until the runtime switches to Tags (foundation plan F3).
 """
@@ -36,6 +36,13 @@ _BUILDING = {
 }
 
 SCHEMAS = {
+    "Goals": {
+        "conventions": {"Tag": "BB.Goal.<GoalName>", "KindTag": "BB.GoalKind.MiniWin wins the demo; BB.GoalKind.Milestone only shows as done (CopperGame 0045)",
+                        "Requirement": "{Raw, Type: Branch|AllStations|Nights|NoMissedMealsDays|AllStatsBand|Expansions, SkillTag?, Amount?, BandTag?}",
+                        "OfferWhen": "same shape, or null: a MiniWin is offered in a dream"},
+        "columns": {"Tag": "tag:Goal", "GoalName": "string", "Kind": "string", "KindTag": "tag:GoalKind",
+                    "Requirement": "dict", "OfferWhen": "dict?", "DreamText": "string?", "DoneText": "string?", "Reward": "string?"},
+    },
     "NightEvents": {
         "conventions": {"Tag": "BB.Event.<EventName>", "Conditions": "[{Raw, StatTag?, BandTag?}]: a \"<base stat> <band>\" condition is resolved, others stay text",
                         "Choices": "[{Label, Cost: {stat Tag: n}, Outcomes: [{Raw, Kind?, Tag?, Amount?, Target?}]}]", "FirstSlice": "Yes = the first event slice fires it (owner)"},
@@ -140,6 +147,8 @@ def _ok(type_name: str, value) -> bool:
         return isinstance(value, list) and all(isinstance(v, dict) and _is_tag("Stat", v.get("StatTag")) and isinstance(v.get("Value"), (int, float)) for v in value)
     if base == "list":
         return isinstance(value, list)
+    if base == "dict":
+        return isinstance(value, dict)
     if base == "bool":
         return isinstance(value, bool)
     if base == "string_list":

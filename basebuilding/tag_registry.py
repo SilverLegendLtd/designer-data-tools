@@ -41,6 +41,7 @@ KIND_PREFIX = {
     "ResearchPool": "BB.ResearchPool.", "Activity": "BB.Activity.", "ActivityPhase": "BB.ActivityPhase.",
     "Leisure": "BB.Leisure.", "Setting": "BB.Setting.", "SettingsTab": "BB.SettingsTab.", "Drain": "BB.Drain.", "Band": "BB.Band.", "ItemCategory": "Inventory.Category.", "Effect": "GameplayEffect.BaseBuilding.", "Meal": "BB.Meal.", "Event": "BB.Event.",
     "EventBeat": "BB.EventBeat.", "EventSubject": "BB.EventSubject.", "Severity": "BB.Severity.",
+    "Goal": "BB.Goal.", "GoalKind": "BB.GoalKind.",
 }
 _TAG = re.compile(r"^[A-Za-z][A-Za-z0-9]*(\.[A-Za-z0-9]+)+$")
 _QUANTITY = re.compile(r"^(.*?)\s+(\d+)$")

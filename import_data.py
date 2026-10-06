@@ -91,6 +91,7 @@ def build_basebuilding() -> None:
     import convert_buildings_stations_work_csv
     import convert_crafting_list_csv
     import convert_food_items_csv
+    import convert_goals_csv
     import convert_base_building_effects_csv
     import convert_night_events_csv
     import convert_research_list_csv
@@ -100,7 +101,7 @@ def build_basebuilding() -> None:
     from tag_registry import REGISTRY
 
     tagged_tables = ["Buildings", "Upgrades", "Work", "ResearchTree", "StartingResources", "BaseLayout",
-                     "LeisureActivities", "Items", "BaseBuildingEffects", "NightEvents"]
+                     "LeisureActivities", "Items", "BaseBuildingEffects", "NightEvents", "Goals"]
     out = DATA_DIR / "basebuilding"
     _fail_if("the Tag registry is inconsistent", REGISTRY.integrity_errors())
     building_count, upgrade_count, work_rows = convert_buildings_stations_work_csv.convert()
@@ -112,6 +113,7 @@ def build_basebuilding() -> None:
     item_count = convert_food_items_csv.convert()
     effect_count = convert_base_building_effects_csv.convert()
     event_count = convert_night_events_csv.convert()
+    goal_count = convert_goals_csv.convert()
     stat_count = write_stat_tags()
 
     tables = {name: json.loads((out / f"{name}.json").read_text(encoding="utf-8")) for name in tagged_tables}
@@ -125,7 +127,7 @@ def build_basebuilding() -> None:
     REGISTRY.write_outputs()
     print(f"basebuilding: {building_count} buildings, {upgrade_count} upgrades, "
           f"{len(work_rows) + len(crafting_work_rows)} work rows, {research_count} research, "
-          f"{starting_count} starting resources, {layout_count} layout rows, {item_count} food items, {effect_count} effects, {event_count} night events, {stat_count} stat Tags")
+          f"{starting_count} starting resources, {layout_count} layout rows, {item_count} food items, {effect_count} effects, {event_count} night events, {goal_count} goals, {stat_count} stat Tags")
 
 
 def build_character() -> None:
