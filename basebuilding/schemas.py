@@ -104,9 +104,11 @@ SCHEMAS = {
                           "columns": {"Tag": "tag:", "Resource": "string", "Amount": "int"}},
     "BaseLayout": {
         "conventions": {"Id": "each game places the part by its Id (positions are not design data, owner 2026-10-06)",
-                        "Unlock": "\"Bunks <n>\" / \"Slot <n>\": the n-th Expand Base choice of that kind opens it; null = from the start"},
+                        "Unlock": "\"Bunks <n>\" / \"Slot <n>\": the n-th Expand Base choice of that kind opens it; null = from the start",
+                        "UnlockTrackTag": "the Unlock's track (BB.Expansion.Bunks / BB.Expansion.Slot); UnlockStep is its n"},
         "columns": {"Id": "string", "Kind": "string", "KindTag": "tag:LayoutKind", "Size": "string?",
-                    "SizeTag": "tag:LayoutSize?", "Row": "string?", "Order": "int?", "Capacity": "int?", "Unlock": "string?"},
+                    "SizeTag": "tag:LayoutSize?", "Row": "string?", "Order": "int?", "Capacity": "int?", "Unlock": "string?",
+                    "UnlockTrackTag": "tag:ExpansionTrack?", "UnlockStep": "int?"},
     },
 }
 

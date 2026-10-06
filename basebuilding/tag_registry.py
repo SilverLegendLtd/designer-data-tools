@@ -37,7 +37,7 @@ KIND_PREFIX = {
     "Research": "BB.Research.", "Resource": "Inventory.Resource.", "Item": "Inventory.Item.",
     "Buff": "BB.Buff.", "Passive": "BB.Passive.", "Mood": "BB.Mood.", "Area": "BB.Area.",
     "Requirement": "BB.Requirement.", "Phase": "BB.Phase.", "WorkType": "BB.WorkType.",
-    "LayoutKind": "BB.Layout.Kind.", "LayoutSize": "BB.Building.Size.",
+    "LayoutKind": "BB.Layout.Kind.", "LayoutSize": "BB.Building.Size.", "ExpansionTrack": "BB.Expansion.",
     "ResearchPool": "BB.ResearchPool.", "Activity": "BB.Activity.", "ActivityPhase": "BB.ActivityPhase.",
     "Leisure": "BB.Leisure.", "Setting": "BB.Setting.", "SettingsTab": "BB.SettingsTab.", "Drain": "BB.Drain.", "Band": "BB.Band.", "ItemCategory": "Inventory.Category.", "Effect": "GameplayEffect.BaseBuilding.", "Meal": "BB.Meal.", "Event": "BB.Event.",
     "EventBeat": "BB.EventBeat.", "EventSubject": "BB.EventSubject.", "Severity": "BB.Severity.",
@@ -196,6 +196,7 @@ class TagRegistry:
         where = f"{source}:{row['Id']}"
         row["KindTag"] = self.resolve("LayoutKind", row.get("Kind"), where + ":Kind")
         row["SizeTag"] = self.resolve("LayoutSize", row.get("Size"), where + ":Size")
+        row["UnlockTrackTag"] = self.resolve("ExpansionTrack", row.get("UnlockTrack"), where + ":Unlock")
 
     # ---- cross-references between tables ---------------------------------
     def resolve_references(self, tables: dict) -> None:
