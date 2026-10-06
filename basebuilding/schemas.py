@@ -36,6 +36,13 @@ _BUILDING = {
 }
 
 SCHEMAS = {
+    "NightEvents": {
+        "conventions": {"Tag": "BB.Event.<EventName>", "Conditions": "[{Raw, StatTag?, BandTag?}]: a \"<base stat> <band>\" condition is resolved, others stay text",
+                        "Choices": "[{Label, Cost: {stat Tag: n}, Outcomes: [{Raw, Kind?, Tag?, Amount?, Target?}]}]", "FirstSlice": "Yes = the first event slice fires it (owner)"},
+        "columns": {"Tag": "tag:Event", "EventName": "string", "Beat": "string", "Conditions": "list", "Subject": "string?",
+                    "Severity": "string?", "DeadlineSource": "string?", "Weight": "int", "CooldownDays": "int", "Once": "bool",
+                    "Title": "string?", "Text": "string?", "Choices": "list", "FirstSlice": "string"},
+    },
     "BaseBuildingEffects": {
         "conventions": {"Tag": "GameplayEffect.BaseBuilding.<Name> (CopperLegend's effect format, category BaseBuilding)",
                         "DurationHours": "game hours, linear decay (D44); null = until removed (e.g. Starving ends with a meal)",
@@ -92,12 +99,13 @@ SCHEMAS = {
             "Description": "string?", "BaseBuffs": "string?", "BaseBuffsTags": "tag_list:Buff",
         },
     },
-    "StartingResources": {"conventions": {}, "columns": {"Tag": "tag:Resource", "Resource": "string", "Amount": "int"}},
+    "StartingResources": {"conventions": {"Tag": "a Resource (Inventory.Resource.*) or an Item (Inventory.Item.*, e.g. starting food)"},
+                          "columns": {"Tag": "tag:", "Resource": "string", "Amount": "int"}},
     "BaseLayout": {
-        "conventions": {"X/Y/Width/Height": "2D world pixels from the base's top-left (D65)"},
+        "conventions": {"Id": "each game places the part by its Id (positions are not design data, owner 2026-10-06)",
+                        "Unlock": "\"Bunks <n>\" / \"Slot <n>\": the n-th Expand Base choice of that kind opens it; null = from the start"},
         "columns": {"Id": "string", "Kind": "string", "KindTag": "tag:LayoutKind", "Size": "string?",
-                    "SizeTag": "tag:LayoutSize?", "X": "int", "Y": "int", "Width": "int", "Height": "int",
-                    "EntranceX": "int?", "EntranceY": "int?"},
+                    "SizeTag": "tag:LayoutSize?", "Row": "string?", "Order": "int?", "Capacity": "int?", "Unlock": "string?"},
     },
 }
 
@@ -127,6 +135,8 @@ def _ok(type_name: str, value) -> bool:
         return isinstance(value, (int, float)) and not isinstance(value, bool)
     if base == "stat_deltas":
         return isinstance(value, list) and all(isinstance(v, dict) and _is_tag("Stat", v.get("StatTag")) and isinstance(v.get("Value"), (int, float)) for v in value)
+    if base == "list":
+        return isinstance(value, list)
     if base == "bool":
         return isinstance(value, bool)
     if base == "string_list":

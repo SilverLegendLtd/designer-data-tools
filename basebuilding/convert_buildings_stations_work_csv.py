@@ -79,6 +79,8 @@ def _work_entry(row: dict) -> dict:
         "Requirements": blank_to_none(row.get("Requirements")),
         "Description": blank_to_none(row.get("Description")),
         "BaseBuffs": blank_to_none(row.get("BaseBuffs")),
+        # "<quantity> <item>", e.g. Grow Food's "2 Potatoes" (CopperGame 0040 F18); the column is optional.
+        "Outcome": blank_to_none(row.get("Outcome")),
     }
 
 

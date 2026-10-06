@@ -59,7 +59,7 @@ class ValidateTest(unittest.TestCase):
 
     def test_display_name_is_a_warning_with_the_tag(self):
         problems = self.check(["Medical Station", "Basic", "Treat Wounds", "Medical", "Well-Being"])
-        self.assertEqual([(p["cell"], p["level"]) for p in problems], [("E2", "warning"), ("M2", "warning")])
+        self.assertEqual([(p["cell"], p["level"]) for p in problems], [("E2", "warning"), ("N2", "warning")])
         self.assertIn("PhysicalSkill.Medical", problems[0]["message"])
 
     def test_strict_makes_names_errors(self):

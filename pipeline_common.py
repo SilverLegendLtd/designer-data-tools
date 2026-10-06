@@ -55,7 +55,7 @@ def registry_entries() -> list[dict]:
 def load_csv_rows(path: Path) -> list[dict]:
     if not path.exists():
         raise SystemExit(f"IMPORT FAILED: missing input {path} -- run the sheet export "
-                         f"(Extensions > Export for games) or check DESIGN_EXPORTS_DIR")
+                         f"(script.google.com > project Export for games > exportAll > Run; see DATA_PIPELINE.md) or check DESIGN_EXPORTS_DIR")
     with path.open(encoding="utf-8-sig", newline="") as f:
         return list(csv.DictReader(f))
 

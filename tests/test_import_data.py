@@ -43,7 +43,7 @@ class ImportDataTest(unittest.TestCase):
 
     def test_build_succeeds(self):
         self.assertEqual(self.result.returncode, 0, self.result.stdout + self.result.stderr)
-        self.assertIn("81 work rows", self.result.stdout)
+        self.assertIn("83 work rows", self.result.stdout)
 
     def test_work_row_has_resolved_tags(self):
         rows = [r for r in self.table("basebuilding/Work.json")

@@ -1,0 +1,48 @@
+Id,Kind,Size,Row,Order,Capacity,Unlock,Notes
+S1,Slot,Small,,,,,North row. Units are 2D world pixels from the base's top-left corner; a Small slot is one 200x240 cell (D65)
+L1,Slot,Large,,,,,3 cells wide = 3 work stations (§2.1)
+M1,Slot,Medium,,,,,2 cells wide = 2 work stations (§2.1)
+S2,Slot,Small,,,,,
+S3,Slot,Small,,,,,South row
+S4,Slot,Small,,,,,
+M2,Slot,Medium,,,,,
+S5,Slot,Small,,,,,
+S6,Slot,Small,,,,,
+Yard,Yard,,,,,,"Open walkable floor between the rows; every slot entrance sits on its edge (the future navmesh, D60)"
+Gate,Gate,,,,,,The way out of the base (Expeditions); entrance = the outer door on the south wall
+Leisure1,Leisure,,,,,,Placeholder leisure points in the Yard (D82): characters go to one when worktime is closed; real Leisure buildings come later (D51) [0042: moved up from y 450 to 380 so the Dormitory wing does not cover it]
+Leisure2,Leisure,,,,,,
+Leisure3,Leisure,,,,,,
+Wander1,Wander,,,,,,Waypoints an idle character wanders between (D82)
+Wander2,Wander,,,,,,
+Wander3,Wander,,,,,,
+Wander4,Wander,,,,,,
+Wander5,Wander,,,,,,
+Dormitory,Dormitory,,,,,,"The sleeping building in the Yard (D85): characters sleep in it at night, one to a bunk; its bunks are the Sleep points"
+Sleep1,Sleep,,,,,,Bunks inside the Dormitory (D85): each character picks a free one at night (6 bunks for a starting crew of 4)
+Sleep2,Sleep,,,,,,
+Sleep3,Sleep,,,,,,
+Sleep4,Sleep,,,,,,
+Sleep5,Sleep,,,,,,
+Sleep6,Sleep,,,,,,
+Mess,Mess,,,,,,Where the crew eats lunch and dinner (0040): tables in the Yard beside the Dormitory
+Seat1,Seat,,,,,,Seats at the Mess tables: one character per seat (6 for a starting crew of 4)
+Seat2,Seat,,,,,,
+Seat3,Seat,,,,,,
+Seat4,Seat,,,,,,
+Seat5,Seat,,,,,,
+Seat6,Seat,,,,,,
+DormitoryWing1,Dormitory,,,,,Bunks 1,"Expand Base, bunks choice 1: a second row of bunks behind the Dormitory"
+Sleep7,Sleep,,,,,Bunks 1,
+Sleep8,Sleep,,,,,Bunks 1,
+Sleep9,Sleep,,,,,Bunks 2,"Expand Base, bunks choice 2: the second row fills up"
+Sleep10,Sleep,,,,,Bunks 2,
+Sleep11,Sleep,,,,,Bunks 3,"Expand Base, bunks choice 3"
+Sleep12,Sleep,,,,,Bunks 3,
+YardEast,Yard,,,,,Slot 1,"Expand Base, slot choice 1: the Yard grows east so the new slots have a way in"
+S7,Slot,Small,,,,Slot 1,"Expand Base, slot choice 1: a Small slot in the north row, east end"
+S8,Slot,Small,,,,Slot 2,"Expand Base, slot choice 2: a Small slot in the south row, east end"
+Wander6,Wander,,,,,Slot 1,A wander point in the new Yard
+YardEast2,Yard,,,,,Slot 3,"Expand Base, slot choice 3: the Yard grows again"
+S9,Slot,Small,,,,Slot 3,
+S10,Slot,Small,,,,Slot 4,

@@ -39,7 +39,7 @@ KIND_PREFIX = {
     "Requirement": "BB.Requirement.", "Phase": "BB.Phase.", "WorkType": "BB.WorkType.",
     "LayoutKind": "BB.Layout.Kind.", "LayoutSize": "BB.Building.Size.",
     "ResearchPool": "BB.ResearchPool.", "Activity": "BB.Activity.", "ActivityPhase": "BB.ActivityPhase.",
-    "Leisure": "BB.Leisure.", "Setting": "BB.Setting.", "SettingsTab": "BB.SettingsTab.", "Drain": "BB.Drain.", "Band": "BB.Band.", "ItemCategory": "Inventory.Category.", "Effect": "GameplayEffect.BaseBuilding.",
+    "Leisure": "BB.Leisure.", "Setting": "BB.Setting.", "SettingsTab": "BB.SettingsTab.", "Drain": "BB.Drain.", "Band": "BB.Band.", "ItemCategory": "Inventory.Category.", "Effect": "GameplayEffect.BaseBuilding.", "Meal": "BB.Meal.", "Event": "BB.Event.",
 }
 _TAG = re.compile(r"^[A-Za-z][A-Za-z0-9]*(\.[A-Za-z0-9]+)+$")
 _QUANTITY = re.compile(r"^(.*?)\s+(\d+)$")
@@ -186,7 +186,10 @@ class TagRegistry:
         row["BaseBuffsTags"] = self.resolve_list("Buff", row.get("BaseBuffs"), where + ":BaseBuffs")
 
     def tag_resource_row(self, row: dict, source: str) -> None:
-        row["Tag"] = self.resolve("Resource", row["Resource"], f"{source}:{row['Resource']}")
+        """A starting stock row: a Resource (Metal ...) or an Item (food items, CopperGame 0040 F19)."""
+        name = row["Resource"]
+        tag = self.lookup.get("Resource", {}).get(_norm(name)) or self.lookup.get("Item", {}).get(_norm(name))
+        row["Tag"] = tag or self.resolve("Resource", name, f"{source}:{name}")
 
     def tag_layout_row(self, row: dict, source: str) -> None:
         where = f"{source}:{row['Id']}"

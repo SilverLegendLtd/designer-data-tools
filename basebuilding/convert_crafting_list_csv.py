@@ -46,6 +46,10 @@ def convert() -> list[dict]:
         }
         for csv_col, json_key in _RESOURCE_COLUMNS.items():
             entry[json_key] = parse_int(row.get(csv_col))
+        if entry["ResourcesNeededToBuild"] is None:
+            # Only the number columns filled (e.g. Expand Base): the cost text is built from them.
+            parts = [f"{csv_col.split()[0]} {entry[key]}" for csv_col, key in _RESOURCE_COLUMNS.items() if entry[key] > 0]
+            entry["ResourcesNeededToBuild"] = ", ".join(parts) if parts else None
         REGISTRY.tag_work_row(entry, CSV_NAME)
         work_rows.append(entry)
     return work_rows

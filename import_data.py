@@ -92,6 +92,7 @@ def build_basebuilding() -> None:
     import convert_crafting_list_csv
     import convert_food_items_csv
     import convert_base_building_effects_csv
+    import convert_night_events_csv
     import convert_research_list_csv
     import convert_starting_resources_csv
     import schemas
@@ -99,7 +100,7 @@ def build_basebuilding() -> None:
     from tag_registry import REGISTRY
 
     tagged_tables = ["Buildings", "Upgrades", "Work", "ResearchTree", "StartingResources", "BaseLayout",
-                     "LeisureActivities", "Items", "BaseBuildingEffects"]
+                     "LeisureActivities", "Items", "BaseBuildingEffects", "NightEvents"]
     out = DATA_DIR / "basebuilding"
     _fail_if("the Tag registry is inconsistent", REGISTRY.integrity_errors())
     building_count, upgrade_count, work_rows = convert_buildings_stations_work_csv.convert()
@@ -110,6 +111,7 @@ def build_basebuilding() -> None:
     layout_count = convert_base_layout_csv.convert()
     item_count = convert_food_items_csv.convert()
     effect_count = convert_base_building_effects_csv.convert()
+    event_count = convert_night_events_csv.convert()
     stat_count = write_stat_tags()
 
     tables = {name: json.loads((out / f"{name}.json").read_text(encoding="utf-8")) for name in tagged_tables}
@@ -123,7 +125,7 @@ def build_basebuilding() -> None:
     REGISTRY.write_outputs()
     print(f"basebuilding: {building_count} buildings, {upgrade_count} upgrades, "
           f"{len(work_rows) + len(crafting_work_rows)} work rows, {research_count} research, "
-          f"{starting_count} starting resources, {layout_count} layout rows, {item_count} food items, {effect_count} effects, {stat_count} stat Tags")
+          f"{starting_count} starting resources, {layout_count} layout rows, {item_count} food items, {effect_count} effects, {event_count} night events, {stat_count} stat Tags")
 
 
 def build_character() -> None:
@@ -137,6 +139,50 @@ def build_character() -> None:
         if not dest.exists():
             sys.exit(f"IMPORT FAILED: Background Data - {tab}.csv did not convert")
         write_json(dest, json.loads(dest.read_text(encoding="utf-8")))  # normalise: UTF-8, LF
+    _fail_if("Background data that does not hold together", check_backgrounds(out))
+
+
+def check_backgrounds(out) -> list:
+    """The Background tabs, after converting: every row has its own Tag (Background.* /
+    LifePath.<phase>.*), at least one stat modifier, real stat Tags as modifier keys, and life paths
+    unlock only Backgrounds that exist. (2026-10-06: a blank A1 on the Adult tab exported every Tag
+    under the key " ", and a Childhood row lost all its stats; neither stopped the import.)"""
+    sys.path.insert(0, str(TOOLS_DIR / "basebuilding"))
+    from tag_registry import REGISTRY
+
+    problems = []
+    tables = {table: json.loads((out / f"{table}.json").read_text(encoding="utf-8")) for table in BACKGROUND_TABS.values()}
+    backgrounds = {row.get("Tag") for row in tables.get("Background", [])}
+    for table, rows in tables.items():
+        sheet = "Background Data - " + next(tab for tab, t in BACKGROUND_TABS.items() if t == table)
+        phase = table.split("_", 1)[1] if "_" in table else None
+        prefix = f"LifePath.{phase}." if phase else "Background."
+        seen = set()
+        for index, row in enumerate(rows, start=2):
+            name = row.get("Name") or f"row {index}"
+            tag = row.get("Tag")
+            if not tag:
+                problems.append(f'{sheet}: {name} has no Tag (is cell A1 exactly "Tag"? the columns are {list(row)[:3]})')
+                continue
+            if not str(tag).startswith(prefix):
+                problems.append(f"{sheet}: {name}'s Tag {tag} does not start with {prefix}")
+            if tag in seen:
+                problems.append(f"{sheet}: the Tag {tag} is used twice")
+            seen.add(tag)
+            modifiers = {}
+            for key, value in row.items():
+                if key.endswith("Modifiers") and isinstance(value, dict):
+                    modifiers.update(value)
+            if not modifiers:
+                problems.append(f"{sheet}: {name} has no stat modifiers at all (lost in the sheet?)")
+            for stat in modifiers:
+                if REGISTRY._kind_of(stat) != "Stat":
+                    problems.append(f"{sheet}: {name}: {stat} is not a stat Tag in Attribute.json")
+            if phase:
+                for unlocked in row.get("UnlockedBackgrounds", []):
+                    if unlocked not in backgrounds:
+                        problems.append(f"{sheet}: {name} unlocks {unlocked}, which is not a Background")
+    return problems
 
 
 def publish_manifest(create: bool = False) -> None:

@@ -11,6 +11,8 @@
     {"spreadsheet": "Background Data", "tab": "YoungAdult"},
     {"spreadsheet": "Background Data", "tab": "Adult"},
     {"spreadsheet": "Items, Food - List", "tab": "Food Items"},
-    {"spreadsheet": "Gameplay Effects for Dialogue System", "tab": "Base Building Effects"}
+    {"spreadsheet": "Gameplay Effects for Dialogue System", "tab": "Base Building Effects"},
+    {"spreadsheet": "Events List - Night Events", "tab": "Night Events"},
+    {"spreadsheet": "Buildings, Stations, Work - Surviving the Grey Legend", "tab": "Base Expansion"}
   ]
 }

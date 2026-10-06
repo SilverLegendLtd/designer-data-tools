@@ -3,4 +3,4 @@ LifePath.Childhood.FarmHand,Worked on a farm during childhood.,Farm Hand,Worked 
 LifePath.Childhood.Bookworm,Spent most of the time reading books.,Bookworm,Spent most of the time reading books.,Background.VaultRaised,Background.TravelingArtist,,,,,,,20,,15,,,15,,,,,,,,30,15,20,,,,,,,,,,,15,,
 LifePath.Childhood.StreetUrchin,Grew up on the streets of a city.,Street Urchin,Grew up on the streets of a city.,Background.UrbanDweller,Background.SyndicateOperative,,20,,,,15,,,,,,,,,15,,,20,,,25,,,,,,15,,10,20,,,,,
 LifePath.Childhood.NatureScout,Explored the wilderness during childhood.,Nature Scout,Explored the wilderness during childhood.,Background.Wildborn,Background.TravelingArtist,,,15,20,,,,,,15,,,,,,20,,25,,,,,,,,,,,,,20,,,,10
-LifePath.Childhood.LonerDrifter,Preferred to be alone or on the move.,Loner/Drifter,Preferred to be alone or on the move.,Background.Drifter,Background.Wildborn,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LifePath.Childhood.LonerDrifter,Preferred to be alone or on the move.,Loner/Drifter,Preferred to be alone or on the move.,Background.Drifter,Background.Wildborn,,,10,10,,,,,,,,,,15,10,10,10,10,,,,,,,,,,,10,10,,10,,,
