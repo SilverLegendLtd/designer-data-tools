@@ -39,8 +39,9 @@ SCHEMAS = {
     "NightEvents": {
         "conventions": {"Tag": "BB.Event.<EventName>", "Conditions": "[{Raw, StatTag?, BandTag?}]: a \"<base stat> <band>\" condition is resolved, others stay text",
                         "Choices": "[{Label, Cost: {stat Tag: n}, Outcomes: [{Raw, Kind?, Tag?, Amount?, Target?}]}]", "FirstSlice": "Yes = the first event slice fires it (owner)"},
-        "columns": {"Tag": "tag:Event", "EventName": "string", "Beat": "string", "Conditions": "list", "Subject": "string?",
-                    "Severity": "string?", "DeadlineSource": "string?", "Weight": "int", "CooldownDays": "int", "Once": "bool",
+        "columns": {"Tag": "tag:Event", "EventName": "string", "Beat": "string", "BeatTag": "tag:EventBeat", "Conditions": "list",
+                    "Subject": "string?", "SubjectTag": "tag:EventSubject?", "SubjectSkillTag": "tag:Stat?",
+                    "Severity": "string?", "SeverityTag": "tag:Severity?", "DeadlineSource": "string?", "Weight": "int", "CooldownDays": "int", "Once": "bool",
                     "Title": "string?", "Text": "string?", "Choices": "list", "FirstSlice": "string"},
     },
     "BaseBuildingEffects": {

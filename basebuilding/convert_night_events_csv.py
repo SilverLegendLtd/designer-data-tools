@@ -14,6 +14,9 @@ engine reads what it can run; FirstSlice = Yes rows are the ones it fires):
   Cost        "<base stat> <n>" -> {stat Tag: n}.
   Outcomes    "; "-list. "Effect <effect> on <target>" -> Effect; "<base stat> +n" -> Stat;
               "<resource> +/-n" -> Resource; anything else -> {"Raw": ...}.
+  Beat, Severity  -> BeatTag (EventBeat), SeverityTag (Severity).
+  Subject     "None" or blank -> no subject; "<rule>" or "<rule>:<stat>" (BestSkill:Mechanical)
+              -> SubjectTag (EventSubject) and SubjectSkillTag (a stat Tag, or null).
 Only FirstSlice = Yes rows must resolve every effect name; a later row may name an effect the list
 does not have yet (e.g. "Injured"): it stays text until the designers add it.
 """
@@ -56,6 +59,15 @@ def _cost(value, where: str) -> dict:
     return cost
 
 
+def _subject(value, where: str) -> tuple:
+    text = (value or "").strip()
+    if not text or text.lower() == "none":
+        return None, None
+    rule, _, skill = text.partition(":")
+    skill_tag = REGISTRY.resolve("Stat", skill, where) if skill.strip() else None
+    return REGISTRY.resolve("EventSubject", rule, where), skill_tag
+
+
 def _outcome(text: str, where: str, strict: bool) -> dict:
     effect = _EFFECT.match(text)
     if effect:
@@ -95,13 +107,18 @@ def convert() -> int:
                     "Cost": _cost(row.get(f"Choice{n}Cost"), f"{where}:Choice{n}Cost"),
                     "Outcomes": [_outcome(p, f"{where}:Choice{n}Outcomes", strict) for p in _parts(row.get(f"Choice{n}Outcomes"))],
                 })
+            subject_tag, subject_skill_tag = _subject(row.get("Subject"), where + ":Subject")
             events.append({
                 "Tag": REGISTRY.resolve("Event", name, where + ":EventName"),
                 "EventName": name,
                 "Beat": (row.get("Beat") or "").strip(),
+                "BeatTag": REGISTRY.resolve("EventBeat", row.get("Beat"), where + ":Beat"),
                 "Conditions": [_condition(p, where + ":Conditions") for p in _parts(row.get("Conditions"))],
                 "Subject": blank_to_none(row.get("Subject")),
+                "SubjectTag": subject_tag,
+                "SubjectSkillTag": subject_skill_tag,
                 "Severity": blank_to_none(row.get("Severity")),
+                "SeverityTag": REGISTRY.resolve("Severity", row.get("Severity"), where + ":Severity"),
                 "DeadlineSource": blank_to_none(row.get("DeadlineSource")),
                 "Weight": parse_int(row.get("Weight")),
                 "CooldownDays": parse_int(row.get("CooldownDays")),
