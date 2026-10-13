@@ -12,7 +12,8 @@ engine reads what it can run; FirstSlice = Yes rows are the ones it fires):
   Conditions  "; "-list. "<base stat> <band>" (e.g. "Well-Being Low") -> StatTag + BandTag;
               anything else stays {"Raw": ...}.
   Cost        "<base stat> <n>" -> {stat Tag: n}.
-  Outcomes    "; "-list. "Effect <effect> on <target>" -> Effect; "<base stat> +n" -> Stat;
+  Outcomes    "; "-list. "Effect <effect> on <target>" -> Effect; "Treatment on <target>" -> Treatment
+              (send the subject to the doctor, CopperGame D119); "<base stat> +n" -> Stat;
               "<resource> +/-n" -> Resource; anything else -> {"Raw": ...}.
   Beat, Severity  -> BeatTag (EventBeat), SeverityTag (Severity).
   Subject     "None" or blank -> no subject; "<rule>" or "<rule>:<stat>" (BestSkill:Mechanical)
@@ -32,6 +33,7 @@ CHOICES = 3
 _BANDS = ("Low", "Weak", "Normal", "High")
 _AMOUNT = re.compile(r"^(.+?)\s+([+-]?\d+)$")
 _EFFECT = re.compile(r"^Effect\s+(.+?)\s+on\s+(.+?)(?:\s*\((.*)\))?$")
+_TREATMENT = re.compile(r"^Treatment\s+on\s+(.+?)$", re.IGNORECASE)
 
 
 def _parts(value) -> list:
@@ -75,6 +77,9 @@ def _outcome(text: str, where: str, strict: bool) -> dict:
         if not known and not strict:
             return {"Raw": text}
         return {"Raw": text, "Kind": "Effect", "Tag": REGISTRY.resolve("Effect", effect.group(1), where), "Target": effect.group(2)}
+    treatment = _TREATMENT.match(text)
+    if treatment:
+        return {"Raw": text, "Kind": "Treatment", "Target": treatment.group(1).strip()}
     amount = _AMOUNT.match(text)
     if amount:
         name, value = amount.group(1), int(amount.group(2))

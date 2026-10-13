@@ -77,6 +77,9 @@ def _work_entry(row: dict) -> dict:
         "MoodType": blank_to_none(row.get("MoodType")),
         "Workload": parse_number_or_item(row.get("Workload")),
         "Requirements": blank_to_none(row.get("Requirements")),
+        # Recipe columns exist only on Crafting List rows (convert_crafting_list_csv.py, D118).
+        "Job": None, "JobTag": None, "Output": None, "OutputTag": None, "OutputQuantity": None,
+        "UnlockedBy": None, "UnlockedByTags": [],
         "Description": blank_to_none(row.get("Description")),
         "BaseBuffs": blank_to_none(row.get("BaseBuffs")),
         # "<quantity> <item>", e.g. Grow Food's "2 Potatoes" (CopperGame 0040 F18); the column is optional.

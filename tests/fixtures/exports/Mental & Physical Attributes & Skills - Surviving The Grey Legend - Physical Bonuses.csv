@@ -1,0 +1,10 @@
+Tag,Tier,SN,JP,TF,Types,Timing,Notes
+PhysicalAttribute.Strength,Large,+,,,SJ SP,AtBirth,S-N positive; any J-P
+PhysicalAttribute.Agility,Medium,-,,-,NF,AtBirth,N and F; from precision sports (Athletic disciplines); NF only
+PhysicalAttribute.Endurance,Large,-,,,NT NF,AtBirth,S-N negative
+PhysicalAttribute.Endurance,Small,+,+,,SJ,AtBirth,S and J; the old text said 10 and was wrong
+PhysicalAttribute.Vitality,Medium,+,+,,SJ,AtBirth,S and J
+PhysicalAttribute.Senses,Small,+,-,,SP,AtBirth,S and P
+PhysicalAttribute.Reaction,Small,+,-,,SP,AtBirth,S and P
+PhysicalAttribute.Reasoning,Small,-,,,NT NF,AtBirth,S-N negative
+MentalAttribute.Focus,Small,-,,,NT NF,AtBirth,Replaces Precision from the design bible; a Mental Attribute; stacks on its own live formula; clamp at 100

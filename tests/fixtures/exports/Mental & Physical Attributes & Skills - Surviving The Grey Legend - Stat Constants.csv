@@ -1,0 +1,11 @@
+Key,Value,Notes
+BonusTier.Large,15,MBTI physical bonus tier
+BonusTier.Medium,10,MBTI physical bonus tier
+BonusTier.Small,5,MBTI physical bonus tier
+PhysicalAttribute.BaseValue,10,Every character starts each of the 7 physical attributes here (before Background and Life Path)
+PhysicalSkill.BaseValue,0,Seeded the first time a Background or Life Path touches the skill
+Stat.Min,0,Every stat
+Stat.Max,100,Every stat. Clamp once at the end of generation (no clamping between steps)
+Mbti.AxisMin,-100,E-I, S-N, T-F, J-P
+Mbti.AxisMax,100,Positive = first letter: E, S, T, J
+Mbti.Rounding,Round half away from zero,Mental formulas are rounded to a whole number after the divide

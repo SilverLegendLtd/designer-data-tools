@@ -3,7 +3,7 @@ import_data.py validates every row against it and writes
 design/data/basebuilding/schemas/<Table>.schema.json, the DataTable shape the Unreal
 port reads (foundation plan F2).
 
-Types: string, int, number_or_item (a number, or the literal "item"),
+Types: string, int, number_or_item (a number, or the literal "item" or "recipe"),
 tag:<Kind> (a registry Tag of that Kind; Kind "Stat" = Attribute.json),
 tag_list:<Kind> (list of them), tag_map:<Kind> (Tag -> int quantity), bool, string_list, number, stat_deltas, list, dict.
 A trailing `?` allows null. Display-name columns are kept next to their Tag
@@ -65,9 +65,9 @@ SCHEMAS = {
     },
     "Items": {
         "conventions": {"Tag": "Inventory.Item.<Name>", "CategoryTag": "Inventory.Category.*; Food items are what cooking consumes (CopperGame 0040)",
-                        "Nutrition": "how many meals the item is worth when cooked, before the cook's outcome tier"},
+                        "Nutrition": "how many meals the item is worth when cooked, before the cook's outcome tier; null for an item that is not food (Items Combat)"},
         "columns": {"Tag": "tag:Item", "Name": "string", "Category": "string", "CategoryTag": "tag:ItemCategory",
-                    "Nutrition": "int", "Sources": "string_list", "NeedsResearch": "bool", "Notes": "string?"},
+                    "Nutrition": "int?", "Sources": "string_list", "NeedsResearch": "bool", "Notes": "string?"},
     },
     "LeisureActivities": {
         "conventions": {"Tag": "BB.Leisure.<Building>.<Activity>; BuildingTag is null for the universal Wandering (BuildingName \"Base\")"},
@@ -83,6 +83,7 @@ SCHEMAS = {
         "conventions": {
             "Difficulty": _ITEM, "Workload": "same \"item\" convention as Difficulty",
             "Tag": "BB.Job.<Station>.<Work>: the start and finish rows of one job share it (PhaseTag tells them apart)",
+            "Job": "Crafting List recipes (D118): the generic Job that lists the recipe at its Station (JobTag); Output is '<quantity> <item>' (OutputTag, OutputQuantity); UnlockedBy is blank (known from the start) or Upgrade / Research / Item Tags (UnlockedByTags)",
             "PrimarySkill": "stat Tag from Attribute.json",
         },
         "columns": {
@@ -94,6 +95,8 @@ SCHEMAS = {
             "Description": "string?", "BaseBuffs": "string?", "BaseBuffsTags": "tag_list:Buff",
             "ResourcesNeededToBuild": "string?", "ResourcesNeededToBuildTags": "tag_map:Resource",
             "Outcome": "string?", "OutcomeTag": "tag:Item?", "OutcomeQuantity": "int?",
+            "Job": "string?", "JobTag": "tag:Job?", "Output": "string?", "OutputTag": "tag:Item?", "OutputQuantity": "int?",
+            "UnlockedBy": "string?", "UnlockedByTags": "tag_list:",
             "MetalResource": "int?", "WiresResource": "int?", "PlasticResource": "int?", "FuelResource": "int?",
         },
     },
@@ -154,7 +157,7 @@ def _ok(type_name: str, value) -> bool:
     if base == "string_list":
         return isinstance(value, list) and all(isinstance(v, str) for v in value)
     if base == "number_or_item":
-        return value == "item" or (isinstance(value, (int, float)) and not isinstance(value, bool))
+        return value in ("item", "recipe") or (isinstance(value, (int, float)) and not isinstance(value, bool))
     if base == "tag":
         return _is_tag(kind, value)
     if base == "tag_list":

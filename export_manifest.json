@@ -10,9 +10,13 @@
     {"spreadsheet": "Background Data", "tab": "Childhood"},
     {"spreadsheet": "Background Data", "tab": "YoungAdult"},
     {"spreadsheet": "Background Data", "tab": "Adult"},
-    {"spreadsheet": "Items, Food - List", "tab": "Food Items"},
+    {"spreadsheet": "Buildings, Stations, Work - Surviving the Grey Legend", "tab": "Items Food"},
+    {"spreadsheet": "Buildings, Stations, Work - Surviving the Grey Legend", "tab": "Items Combat"},
     {"spreadsheet": "Gameplay Effects for Dialogue System", "tab": "Base Building Effects"},
     {"spreadsheet": "Events List - Night Events", "tab": "Night Events"},
-    {"spreadsheet": "Buildings, Stations, Work - Surviving the Grey Legend", "tab": "Base Expansion"}
+    {"spreadsheet": "Buildings, Stations, Work - Surviving the Grey Legend", "tab": "Base Expansion"},
+    {"spreadsheet": "Mental & Physical Attributes & Skills - Surviving The Grey Legend", "tab": "Stat Calculations"},
+    {"spreadsheet": "Mental & Physical Attributes & Skills - Surviving The Grey Legend", "tab": "Physical Bonuses"},
+    {"spreadsheet": "Mental & Physical Attributes & Skills - Surviving The Grey Legend", "tab": "Stat Constants"}
   ]
 }

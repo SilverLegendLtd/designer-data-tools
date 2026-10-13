@@ -127,7 +127,7 @@ def build_basebuilding() -> None:
     REGISTRY.write_outputs()
     print(f"basebuilding: {building_count} buildings, {upgrade_count} upgrades, "
           f"{len(work_rows) + len(crafting_work_rows)} work rows, {research_count} research, "
-          f"{starting_count} starting resources, {layout_count} layout rows, {item_count} food items, {effect_count} effects, {event_count} night events, {goal_count} goals, {stat_count} stat Tags")
+          f"{starting_count} starting resources, {layout_count} layout rows, {item_count} items (food and combat), {effect_count} effects, {event_count} night events, {goal_count} goals, {stat_count} stat Tags")
 
 
 def build_character() -> None:
@@ -142,6 +142,11 @@ def build_character() -> None:
             sys.exit(f"IMPORT FAILED: Background Data - {tab}.csv did not convert")
         write_json(dest, json.loads(dest.read_text(encoding="utf-8")))  # normalise: UTF-8, LF
     _fail_if("Background data that does not hold together", check_backgrounds(out))
+    import convert_stat_calculations_csv
+
+    calculations, bonuses, problems = convert_stat_calculations_csv.convert()
+    _fail_if("the stat calculation tabs (Mental & Physical Attributes & Skills)", problems)
+    print(f"character: {calculations} stat calculations, {bonuses} physical bonus rows")
 
 
 def check_backgrounds(out) -> list:

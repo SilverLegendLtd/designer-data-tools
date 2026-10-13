@@ -86,14 +86,15 @@ def parse_int_or_none(value):
 
 
 def parse_number_or_item(value):
-    """Parses a Difficulty/Workload cell that's either a number or the literal
-    'item' placeholder (meaning: this row's real difficulty is authored
-    per-item in Items.json, not here)."""
+    """Parses a Difficulty/Workload cell that's either a number or a literal
+    placeholder: 'item' (this row's real difficulty is authored per-item in
+    Items.json, not here) or 'recipe' (it comes from the chosen recipe's row in
+    the Crafting List, flat per recipe, CopperGame D118)."""
     value = (value or "").strip()
     if not value:
         return None
-    if value.lower() == "item":
-        return "item"
+    if value.lower() in ("item", "recipe"):
+        return value.lower()
     as_float = float(value)
     return int(as_float) if as_float.is_integer() else as_float
 

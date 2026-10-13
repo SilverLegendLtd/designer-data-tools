@@ -7,6 +7,8 @@
       "files": [
         {"from": "basebuilding/*.json", "to": "data/basebuilding/"},
         {"from": "basebuilding/schemas/*.json", "to": "data/basebuilding/schemas/"},
+        {"from": "character/Stat*.json", "to": "data/character/"},
+        {"from": "character/PhysicalBonuses.json", "to": "data/character/"},
         {"from": "docs/basebuilding/tag-registry.md", "to": "docs/porting/tag-registry.md"},
         {"from": "docs/basebuilding/tags-for-unreal-lead.md", "to": "docs/porting/tags-for-unreal-lead.md"}
       ]

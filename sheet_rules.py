@@ -21,6 +21,7 @@ like "AttributeModifiers/<Tag>" whose Tag part must be a registry Tag) and `head
 import re
 
 BSW = "Buildings, Stations, Work - Surviving the Grey Legend"
+MPAS = "Mental & Physical Attributes & Skills - Surviving The Grey Legend"
 HOLDERS = ["Station", "Upgrade", "Building"]
 
 
@@ -65,8 +66,18 @@ SHEETS = {
                    "Resources Needed to Build": _ref("Resource", "quantities")}, BUILDING_ROWS)}},
     f"{BSW} - Crafting List": {"skip_blank": "Station", "columns": {
         "Station": _ref(["Station", "Upgrade"]), **_CHECK,
-        "Resources Needed to Build": _ref("Resource", "quantities"), "Outcome": _ref("Item", "outcome"),
+        "Resources Needed to Build": _ref("Resource", "quantities"),
+        # Job is the generic Work job that lists the recipe ("Craft Ammunition" at the row's Station): it
+        # is not a registry name by itself (Job names are "<Station> / <Work>"), so the converter resolves
+        # it and the sheet check leaves it alone. Output is "<quantity> <item>"; UnlockedBy names what
+        # teaches the recipe: blank = known from the start, else an Upgrade, a Research node or a
+        # blueprint Item (CopperGame D118).
+        "Output": _ref("Item", "outcome"), "UnlockedBy": _ref(["Upgrade", "Research", "Item"], "list"),
         "BaseBuffs": _ref("Buff", "list")}},
+    f"{BSW} - Items Food": {"skip_blank": "Name", "columns": {
+        "Name": _identity("Item"), "Category": _ref("ItemCategory")}},
+    f"{BSW} - Items Combat": {"skip_blank": "Name", "columns": {
+        "Name": _identity("Item"), "Category": _ref("ItemCategory")}},
     f"{BSW} - Research List": {"columns": {
         "Name": _identity("Research"), "Skill": _ref("Stat", "list"), **_CHECK,
         "SpecialCost": _ref("Stat", "quantities"), "RequirementA": _ref(["Research"] + HOLDERS, "list"),
@@ -75,6 +86,8 @@ SHEETS = {
         "BuildingName": _identity("Building", except_=["Base"]),
         **_scoped({"BaseBuffs": _ref("Buff", "list"), "Area Requirements": _ref("Area"),
                    "ResearchRequirement": _ref("Research", "list")}, ["Leisure Building"])}},
+    f"{MPAS} - Stat Calculations": {"skip_blank": "Tag", "columns": {"Tag": _ref("Stat")}},
+    f"{MPAS} - Physical Bonuses": {"skip_blank": "Tag", "columns": {"Tag": _ref("Stat")}},
     "Background Data - Background": {"columns": {}, **_BACKGROUND_HEADERS},
     "Background Data - Childhood": _BACKGROUND,
     "Background Data - YoungAdult": _BACKGROUND,

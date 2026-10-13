@@ -10,7 +10,7 @@ build_data.py appends this converter's rows to the other converter's before
 writing data/basebuilding/Work.json.
 """
 
-from tag_registry import REGISTRY
+from tag_registry import REGISTRY, split_list, _norm
 from pipeline_common import export_csv, blank_to_none, load_csv_rows, parse_int, parse_number_or_item
 
 CSV_NAME = "Buildings, Stations, Work - Surviving the Grey Legend - Crafting List.csv"
@@ -21,6 +21,20 @@ _RESOURCE_COLUMNS = {
     "Plastic Resource": "PlasticResource",
     "Fuel resource": "FuelResource",
 }
+
+
+def _unlocked_by(value, where: str) -> list:
+    """UnlockedBy: blank = known from the start; else Upgrade / Research / Item names (or Tags) that teach the recipe (D118)."""
+    tags = []
+    for name in split_list(value):
+        found = name if name in REGISTRY.names else next(
+            (REGISTRY.lookup.get(kind, {}).get(_norm(name)) for kind in ("Upgrade", "Research", "Item")
+             if REGISTRY.lookup.get(kind, {}).get(_norm(name))), None)
+        if found:
+            tags.append(found)
+        else:
+            REGISTRY.resolve("Upgrade", name, where)  # records the unresolved name for the build report
+    return tags
 
 
 def convert() -> list[dict]:
@@ -40,7 +54,6 @@ def convert() -> list[dict]:
             "MoodType": blank_to_none(row.get("MoodType")),
             "Workload": parse_number_or_item(row.get("Workload")),
             "ResourcesNeededToBuild": blank_to_none(row.get("Resources Needed to Build")),
-            "Outcome": blank_to_none(row.get("Outcome")),
             "Description": blank_to_none(row.get("Description")),
             "BaseBuffs": blank_to_none(row.get("BaseBuffs")),
         }
@@ -51,6 +64,16 @@ def convert() -> list[dict]:
             parts = [f"{csv_col.split()[0]} {entry[key]}" for csv_col, key in _RESOURCE_COLUMNS.items() if entry[key] > 0]
             entry["ResourcesNeededToBuild"] = ", ".join(parts) if parts else None
         REGISTRY.tag_work_row(entry, CSV_NAME)
+        # Recipe columns (D118, on the start row): the generic Job that lists the recipe at this Station,
+        # what it makes, and what teaches it.
+        where = f"{CSV_NAME}:{row['CraftName']}"
+        job = blank_to_none(row.get("Job"))
+        entry["Job"] = job
+        entry["JobTag"] = REGISTRY.resolve("Job", REGISTRY.job_name({"BuildingName": entry["BuildingName"], "Work": job}), where + ":Job") if job else None
+        entry["Output"] = blank_to_none(row.get("Output"))
+        entry["OutputTag"], entry["OutputQuantity"] = REGISTRY.outcome(row.get("Output"), where + ":Output")
+        entry["UnlockedBy"] = blank_to_none(row.get("UnlockedBy"))
+        entry["UnlockedByTags"] = _unlocked_by(row.get("UnlockedBy"), where + ":UnlockedBy")
         work_rows.append(entry)
     return work_rows
 
