@@ -18,7 +18,7 @@ from tag_registry import REGISTRY
 from pipeline_common import DATA_DIR, export_csv, source_file, blank_to_none, load_csv_rows, parse_int, write_json
 
 CSV_NAME = "Buildings, Stations, Work - Surviving the Grey Legend - Leisure Buildings.csv"
-ACTIVITIES_DEST = DATA_DIR / "basebuilding" / "LeisureActivities.json"
+ACTIVITIES_DEST = DATA_DIR / "BaseBuilding" / "LeisureActivities.json"
 MOVEMENT_CSV_NAME = "Leisure Activity Movement.csv"
 # The walking patterns the game can play (behaviour/leisure_movement.gd implements each one).
 PATTERNS = ("stay", "loiter", "roam", "circuit", "visit", "corner", "shuffle")

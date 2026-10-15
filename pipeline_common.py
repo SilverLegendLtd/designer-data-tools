@@ -21,8 +21,8 @@ from pathlib import Path
 TOOLS_DIR = Path(__file__).resolve().parent
 GAME_DESIGN_ROOT = TOOLS_DIR.parent
 DATA_DIR = Path(os.environ.get("DESIGN_DATA_DIR", GAME_DESIGN_ROOT / "design" / "data" / "Bronze"))
-SOURCES_DIR = DATA_DIR / "sources"
-DOCS_OUT_DIR = DATA_DIR / "docs"
+SOURCES_DIR = DATA_DIR / "Sources"
+DOCS_OUT_DIR = DATA_DIR / "Docs"
 EXPORTS_DIR = Path(os.environ.get(
     "DESIGN_EXPORTS_DIR", r"G:\Shared drives\Games\Surviving the Grey Legend\Design\exports"))
 
@@ -103,7 +103,7 @@ def parse_number_or_item(value):
 # Resolving sheet text to Tags lives in basebuilding/tag_registry.py; this only loads the stat rows.
 
 ATTRIBUTE_JSON = DATA_DIR / "Attribute.json"
-STAT_TAGS_DEST = DATA_DIR / "basebuilding" / "StatTags.json"
+STAT_TAGS_DEST = DATA_DIR / "BaseBuilding" / "StatTags.json"
 
 
 class StatTagRows:

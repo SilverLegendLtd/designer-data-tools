@@ -23,7 +23,7 @@ from pathlib import Path
 
 TOOLS_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS_DIR))
-sys.path.insert(0, str(TOOLS_DIR / "basebuilding"))
+sys.path.insert(0, str(TOOLS_DIR / "BaseBuilding"))
 
 import csv  # noqa: E402
 
@@ -86,34 +86,38 @@ def validate_exports() -> None:
     _fail_if("sheet validation", [f'{p["sheet"]} {p["cell"]}: {p["message"]}' for p in errors])
 
 
+# One line per sheet tab that has its own converter: (converter module, table written, label for the summary).
+# Each module's convert() returns the number of rows. Adding a tab = one line here (plus its converter).
+SIMPLE_TABLES = [
+    ("convert_research_list_csv", "ResearchTree", "research"),
+    ("convert_starting_resources_csv", "StartingResources", "starting resources"),
+    ("convert_base_layout_csv", "BaseLayout", "layout rows"),
+    ("convert_food_items_csv", "Items", "items (food and combat)"),
+    ("convert_base_building_effects_csv", "BaseBuildingEffects", "effects"),
+    ("convert_night_events_csv", "NightEvents", "night events"),
+    ("convert_goals_csv", "Goals", "goals"),
+    ("convert_level_curve_csv", "LevelCurve", "levels"),
+]
+# Tables written by the Buildings / Stations / Work and Crafting List converters.
+BUILDING_TABLES = ["Buildings", "Upgrades", "Work", "LeisureActivities"]
+
+
 def build_basebuilding() -> None:
-    import convert_base_layout_csv
+    import importlib
+
     import convert_buildings_stations_work_csv
     import convert_crafting_list_csv
-    import convert_food_items_csv
-    import convert_goals_csv
-    import convert_base_building_effects_csv
-    import convert_night_events_csv
-    import convert_research_list_csv
-    import convert_starting_resources_csv
     import schemas
     from pipeline_common import write_stat_tags
     from tag_registry import REGISTRY
 
-    tagged_tables = ["Buildings", "Upgrades", "Work", "ResearchTree", "StartingResources", "BaseLayout",
-                     "LeisureActivities", "Items", "BaseBuildingEffects", "NightEvents", "Goals"]
-    out = DATA_DIR / "basebuilding"
+    tagged_tables = BUILDING_TABLES + [table for _, table, _ in SIMPLE_TABLES]
+    out = DATA_DIR / "BaseBuilding"
     _fail_if("the Tag registry is inconsistent", REGISTRY.integrity_errors())
     building_count, upgrade_count, work_rows = convert_buildings_stations_work_csv.convert()
     crafting_work_rows = convert_crafting_list_csv.convert()
     write_json(out / "Work.json", work_rows + crafting_work_rows)
-    research_count = convert_research_list_csv.convert()
-    starting_count = convert_starting_resources_csv.convert()
-    layout_count = convert_base_layout_csv.convert()
-    item_count = convert_food_items_csv.convert()
-    effect_count = convert_base_building_effects_csv.convert()
-    event_count = convert_night_events_csv.convert()
-    goal_count = convert_goals_csv.convert()
+    counts = [(label, importlib.import_module(module).convert()) for module, _, label in SIMPLE_TABLES]
     stat_count = write_stat_tags()
 
     tables = {name: json.loads((out / f"{name}.json").read_text(encoding="utf-8")) for name in tagged_tables}
@@ -125,15 +129,15 @@ def build_basebuilding() -> None:
     for name, rows in tables.items():
         write_json(out / f"{name}.json", rows)
     REGISTRY.write_outputs()
+    summary = ", ".join(f"{n} {label}" for label, n in counts)
     print(f"basebuilding: {building_count} buildings, {upgrade_count} upgrades, "
-          f"{len(work_rows) + len(crafting_work_rows)} work rows, {research_count} research, "
-          f"{starting_count} starting resources, {layout_count} layout rows, {item_count} items (food and combat), {effect_count} effects, {event_count} night events, {goal_count} goals, {stat_count} stat Tags")
+          f"{len(work_rows) + len(crafting_work_rows)} work rows, {summary}, {stat_count} stat Tags")
 
 
 def build_character() -> None:
     from backgroundCSVtoJSON import convert_csv_to_json
 
-    out = DATA_DIR / "character"
+    out = DATA_DIR / "Character"
     out.mkdir(parents=True, exist_ok=True)
     for tab, table in BACKGROUND_TABS.items():
         dest = out / f"{table}.json"
@@ -154,7 +158,7 @@ def check_backgrounds(out) -> list:
     LifePath.<phase>.*), at least one stat modifier, real stat Tags as modifier keys, and life paths
     unlock only Backgrounds that exist. (2026-10-06: a blank A1 on the Adult tab exported every Tag
     under the key " ", and a Childhood row lost all its stats; neither stopped the import.)"""
-    sys.path.insert(0, str(TOOLS_DIR / "basebuilding"))
+    sys.path.insert(0, str(TOOLS_DIR / "BaseBuilding"))
     from tag_registry import REGISTRY
 
     problems = []

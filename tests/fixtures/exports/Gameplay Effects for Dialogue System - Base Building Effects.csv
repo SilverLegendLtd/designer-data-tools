@@ -1,0 +1,7 @@
+Name,Tag,EffectType,CheckSkill,SecondaryCheckSkill,CheckAttribute,DurationCheckSkill,DurationCheckSecondarySkill,DurationCheckAttribute,Effects,Arousal,Valence,WorkTierModifier,CannotWork,DurationHours,AppliedBy,Notes
+Hungry,GameplayEffect.BaseBuilding.Hungry,Negative,,,,,,,,0.1,-0.1,-1,No,24,A missed meal (0040 F4),Work checks one outcome tier worse; wears off over a day; eating clears it
+Starving,GameplayEffect.BaseBuilding.Starving,Negative,,,,,,,,0.2,-0.3,,Yes,,Two missed meals in a row (0040 F4),Cannot work until they eat; lasts until a meal
+Ate Raw Food,GameplayEffect.BaseBuilding.AteRawFood,Negative,Resilience,Stress Management,Vitality,Stress Management,Resilience,Adaptability,,0.1,-0.2,,No,8,Eating a raw food item when there is no meal (0040 F14),Bad mood only: counts as half a meal
+Sick,GameplayEffect.BaseBuilding.Sick,Negative,Resilience,Stress Management,Vitality,Resilience,Stress Management,Adaptability,,-0.1,-0.2,,Yes,24,Night event Fever in the Night (0039 #1),Suggestion from the event list
+Unmotivated,GameplayEffect.BaseBuilding.Unmotivated,Negative,Resilience,Stress Management,Discipline,Stress Management,Resilience,Discipline,,-0.2,-0.2,-1,No,24,"Night events Harsh Words, Empty Stomachs, Losing Heart (0039)",Suggestion from the event list
+Checked,GameplayEffect.BaseBuilding.Checked,Positive,,,,,,,,0,0.1,,No,168,The weekly check-up (0038 G1), Full protection from Sick for 7 days │

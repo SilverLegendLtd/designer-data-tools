@@ -24,7 +24,7 @@ COMBAT_CSV = f"{SHEET} - Items Combat.csv"
 LEGACY_FOOD_CSV = "Items, Food - List - Food Items.csv"
 # Kept for the callers that name the first list.
 CSV_NAME = FOOD_CSV
-DEST = DATA_DIR / "basebuilding" / "Items.json"
+DEST = DATA_DIR / "BaseBuilding" / "Items.json"
 
 
 def _read(csv_name: str) -> list[dict]:

@@ -11,7 +11,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import import_data  # noqa: E402
 
-SOURCE = import_data.DATA_DIR / "character"
+SOURCE = import_data.DATA_DIR / "Character"
 
 
 class BackgroundChecksTest(unittest.TestCase):

@@ -17,7 +17,7 @@ from tag_registry import REGISTRY
 from pipeline_common import DATA_DIR, export_csv, blank_to_none, load_csv_rows, parse_int_or_none, write_json
 
 CSV_NAME = "Buildings, Stations, Work - Surviving the Grey Legend - Research List.csv"
-JSON_DEST = DATA_DIR / "basebuilding" / "ResearchTree.json"
+JSON_DEST = DATA_DIR / "BaseBuilding" / "ResearchTree.json"
 
 
 def convert() -> int:

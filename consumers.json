@@ -5,28 +5,28 @@
       "root": "../CopperGame",
       "enabled": true,
       "files": [
-        {"from": "basebuilding/*.json", "to": "data/basebuilding/"},
-        {"from": "basebuilding/schemas/*.json", "to": "data/basebuilding/schemas/"},
-        {"from": "character/Stat*.json", "to": "data/character/"},
-        {"from": "character/PhysicalBonuses.json", "to": "data/character/"},
-        {"from": "docs/basebuilding/tag-registry.md", "to": "docs/porting/tag-registry.md"},
-        {"from": "docs/basebuilding/tags-for-unreal-lead.md", "to": "docs/porting/tags-for-unreal-lead.md"}
+        {"from": "BaseBuilding/*.json", "to": "data/basebuilding/"},
+        {"from": "BaseBuilding/Schemas/*.json", "to": "data/basebuilding/schemas/"},
+        {"from": "Character/Stat*.json", "to": "data/character/"},
+        {"from": "Character/PhysicalBonuses.json", "to": "data/character/"},
+        {"from": "Docs/BaseBuilding/tag-registry.md", "to": "docs/porting/tag-registry.md"},
+        {"from": "Docs/BaseBuilding/tags-for-unreal-lead.md", "to": "docs/porting/tags-for-unreal-lead.md"}
       ]
     },
     "CopperShared": {
       "root": "../CopperGame/addons/copper_shared",
       "enabled": true,
       "files": [
-        {"from": "character/Background*.json", "to": "data/character_gen/"},
-        {"from": "character/Stat*.json", "to": "data/character_gen/"},
-        {"from": "character/PhysicalBonuses.json", "to": "data/character_gen/"}
+        {"from": "Character/Background*.json", "to": "data/character_gen/"},
+        {"from": "Character/Stat*.json", "to": "data/character_gen/"},
+        {"from": "Character/PhysicalBonuses.json", "to": "data/character_gen/"}
       ]
     },
     "CopperLegend": {
       "root": "../CopperLegend",
       "enabled": false,
       "files": [
-        {"from": "character/Background*.json", "to": "designer_data/sources/"}
+        {"from": "Character/Background*.json", "to": "designer_data/sources/"}
       ]
     },
     "Unreal": {
@@ -34,7 +34,7 @@
       "enabled": false,
       "files": [
         {"from": "Attribute.json", "to": "Data/"},
-        {"from": "character/Background*.json", "to": "Data/"}
+        {"from": "Character/Background*.json", "to": "Data/"}
       ]
     }
   }

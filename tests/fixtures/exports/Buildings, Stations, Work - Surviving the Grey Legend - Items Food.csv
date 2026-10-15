@@ -1,0 +1,10 @@
+Name,Category,Nutrition,Source,NeedsResearch,Notes
+Potatoes,Food,1,Farmed,No,The Items Design example for Food; what Grow Food yields at the Food Station
+Mushrooms,Food,1,Farmed,No,Grows in the dark; a farmed crop with no sunlight needed
+Beans,Food,2,Farmed,No,"A second farmed crop, so the Expert Food Station can grow something better or more"
+Canned Food,Food,2,"Starting, Looted",No,The starting stock (replaces the old 12 Food) and the most common loot
+Dried Meat,Food,2,Looted,No,Expedition loot; keeps well
+Flour Sack,Food,3,Looted,No,Rare loot; cooks into several meals
+Ration Pack,Food,3,"Starting, Looted",No,Military rations; a few in the starting stock
+Fresh Meat,Food,4,Looted,No,Meat from a freshly killed animal
+Alien Fruit,Food,2,Looted,Yes,Food from Unknown Origin

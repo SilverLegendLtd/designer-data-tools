@@ -39,7 +39,7 @@ class StatCalculationsTest(unittest.TestCase):
         shutil.rmtree(self.tmp, ignore_errors=True)
 
     def table(self, name):
-        return json.loads((self.out / "character" / name).read_text(encoding="utf-8"))
+        return json.loads((self.out / "Character" / name).read_text(encoding="utf-8"))
 
     def edit(self, tab, change):
         path = self.exports / f"{SHEET} - {tab}.csv"

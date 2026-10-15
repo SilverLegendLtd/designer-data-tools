@@ -88,6 +88,7 @@ SHEETS = {
                    "ResearchRequirement": _ref("Research", "list")}, ["Leisure Building"])}},
     f"{MPAS} - Stat Calculations": {"skip_blank": "Tag", "columns": {"Tag": _ref("Stat")}},
     f"{MPAS} - Physical Bonuses": {"skip_blank": "Tag", "columns": {"Tag": _ref("Stat")}},
+    f"{MPAS} - Level-up": {"skip_blank": "Level", "columns": {}},
     "Background Data - Background": {"columns": {}, **_BACKGROUND_HEADERS},
     "Background Data - Childhood": _BACKGROUND,
     "Background Data - YoungAdult": _BACKGROUND,

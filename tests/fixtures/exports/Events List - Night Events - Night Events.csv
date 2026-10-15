@@ -1,0 +1,19 @@
+EventName,Beat,Conditions,Subject,Severity,DeadlineSource,Weight,CooldownDays,Once,Title,Text,Choice1Label,Choice1Cost,Choice1Outcomes,Choice2Label,Choice2Cost,Choice2Outcomes,FirstSlice,Notes
+FeverInTheNight,Night,Well-Being Low,RandomWorker,Setback,,10,3,No,Fever in the Night,{Name} wakes up burning with fever.,Treat now,Well-Being 3,Effect Sick on Subject; Treatment on Subject,Let them rest,,Effect Sick on Subject,Yes,
+CleanBillOfHealth,Night,Well-Being High,None,Flavour,,5,3,No,Clean Bill of Health,The check-ups paid off: everyone slept well.,Note it,,Well-Being +2,,,,Yes,
+HarshWords,Night,Unity Low,TwoCharacters,Setback,,10,3,No,Harsh Words,{A} and {B} argue past midnight.,Mediate,Unity 3,,Let it burn out,,Effect Unmotivated on Subjects,Later,Needs two subjects
+StoriesByTheFire,Night,Unity High,RandomCharacter,Flavour,,5,3,No,Stories by the Fire,{Name} tells a story; the others stay up to listen.,Join in,,Unity +2,,,,Yes,
+MovementAtTheFence,Night,Safety Low,None,Setback,,10,3,No,Movement at the Fence,Something tests the fence in the dark.,Double the watch,Safety 3,,Ignore it,,Metal -5,Yes,
+QuietWatch,Night,Safety High,GuardOnDuty,Flavour,,5,3,No,Quiet Watch,{Name}'s watch passes without a sound.,Good,,Safety +2,,,,Yes,
+EmptyStomachs,Night,Survival Low,RandomCharacter,Setback,,10,3,No,Empty Stomachs,{Name} can't sleep for hunger.,Share rations,Survival 3,,Go without,,Effect Unmotivated on Subject,Yes,
+MidnightFeast,Night,Survival High,None,Flavour,,5,3,No,Midnight Feast,A good stock lets the crew eat well tonight.,Enjoy it,,Unity +2,,,,Yes,
+GeneratorStutter,Night,Tech Low,None,Setback,,10,3,No,Generator Stutter,The lights flicker; the generator coughs.,Repair now,Tech 3,,Leave it,,Fuel -3,Yes,
+TinkerersNight,Night,Tech High,BestSkill:Mechanical,Flavour,,5,3,No,Tinkerer's Night,{Name} fixes something nobody asked them to.,Thank them,,Tech +2; Wires +2,,,,Yes,
+LostNotes,Night,Science Low,RandomResearcher,Setback,,10,3,No,Lost Notes,{Name}'s notes got soaked by a leak.,Rewrite them,Science 3,,Accept the loss,,Research slows (later),Partly,Second outcome needs research slowing
+SleeplessInsight,Night,Science High,BestSkill:Research,Flavour,,5,3,No,Sleepless Insight,{Name} wakes up with an idea.,Write it down,,Science +2,,,,Yes,
+BadDream,Night,"Distress High (D62, later)",MostDistressed,Flavour,,5,3,No,Bad Dream,{Name} cries out in their sleep.,Comfort them,Unity 2,Mood + (later),Let them be,,,Later,Needs needs/distress (D62)
+LosingHeart,Night,SameJobDays >= 5,ThatCharacter,Setback,,10,5,No,Losing Heart,{Name} wonders what the work is for.,Give them a day off,,They rest tomorrow,Push on,,Effect Unmotivated on Subject (2 days),Yes,Needs a days-on-the-same-job count
+KnockAtTheGate,Night,Unity Normal+; free bunk,Stranger,Flavour,,5,5,No,Knock at the Gate,A tired traveller asks for shelter.,Let them in,,New crew member (FI-23),Turn them away,,,Later,Needs recruitment (FI-23)
+VoiceOnTheRadio,Day,Unity High; Radio built,None,Flavour,,5,5,No,Voice on the Radio,A trader answers your call.,The trader card (0037 E7),,,,,,Later,Day beat; the trader event
+NightThief,Night,Safety Low; storage full,None,Harsh,,5,5,No,Night Thief,Supplies are missing in the morning.,Lose resources,,Resources -5,Set a trap,Safety 3,"Caught next time (chain, later)",Partly,Second outcome needs chains
+SomethingBigOutside,Night,Safety Low 3 days (FI-04),None,Harsh,,5,7,No,Something Big Outside,Heavy steps circle the base all night.,Hold the line,Safety 5,Effect Injured on RandomWorker,Hide,,Buildings damaged (later),Later,Future attacks; needs Injured effect and damage

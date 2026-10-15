@@ -30,7 +30,7 @@ class ImportDataTest(unittest.TestCase):
         cls.out = cls.tmp / "data"
         cls.out.mkdir()
         shutil.copy(DATA / "Attribute.json", cls.out)
-        shutil.copytree(DATA / "sources", cls.out / "sources")
+        shutil.copytree(DATA / "Sources", cls.out / "Sources")
         cls.env = {**os.environ, "DESIGN_EXPORTS_DIR": str(FIXTURE_EXPORTS), "DESIGN_DATA_DIR": str(cls.out)}
         cls.result = run("--build", env=cls.env)
 
@@ -43,10 +43,10 @@ class ImportDataTest(unittest.TestCase):
 
     def test_build_succeeds(self):
         self.assertEqual(self.result.returncode, 0, self.result.stdout + self.result.stderr)
-        self.assertIn("83 work rows", self.result.stdout)
+        self.assertIn("85 work rows", self.result.stdout)
 
     def test_work_row_has_resolved_tags(self):
-        rows = [r for r in self.table("basebuilding/Work.json")
+        rows = [r for r in self.table("BaseBuilding/Work.json")
                 if r["Tag"] == "BB.Job.MedicalStation.TreatWounds" and r["Phase"] == "start"]
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["PrimarySkill"], "PhysicalSkill.Medical")
@@ -55,16 +55,16 @@ class ImportDataTest(unittest.TestCase):
         self.assertEqual(rows[0]["RequirementsTag"], "BB.Requirement.Patient")
 
     def test_generators_keep_sheet_electricity(self):
-        by_tag = {b["Tag"]: b["ElectricityRequirements"] for b in self.table("basebuilding/Buildings.json")}
+        by_tag = {b["Tag"]: b["ElectricityRequirements"] for b in self.table("BaseBuilding/Buildings.json")}
         self.assertEqual(by_tag["BB.Building.SmallPowerGenerator"], -2)
         self.assertEqual(by_tag["BB.Building.LargePowerGenerator"], -15)
 
     def test_research_and_stats_counts(self):
-        self.assertEqual(len(self.table("basebuilding/ResearchTree.json")), 59)
-        self.assertEqual(len(self.table("basebuilding/StatTags.json")), 42)
+        self.assertEqual(len(self.table("BaseBuilding/ResearchTree.json")), 59)
+        self.assertEqual(len(self.table("BaseBuilding/StatTags.json")), 44)  # 42 + Health and Stamina (D127)
 
     def test_background_nested_columns(self):
-        adult = {r["Tag"]: r for r in self.table("character/Background_Adult.json")}
+        adult = {r["Tag"]: r for r in self.table("Character/Background_Adult.json")}
         guard = adult["LifePath.Adult.CaravanGuard"]
         self.assertEqual(guard["AttributeModifiers"]["PhysicalSkill.Firearms"], 45.0)
         self.assertEqual(guard["UnlockedBackgrounds"], ["Background.SyndicateOperative",
@@ -93,17 +93,17 @@ class RegistryFileTest(unittest.TestCase):
             out = tmp / "data"
             out.mkdir()
             shutil.copy(DATA / "Attribute.json", out)
-            shutil.copytree(DATA / "sources", out / "sources")
-            stations = [e for e in json.loads((DATA / "sources" / "BaseBuildingTags.json").read_text(encoding="utf-8"))
+            shutil.copytree(DATA / "Sources", out / "Sources")
+            stations = [e for e in json.loads((DATA / "Sources" / "BaseBuildingTags.json").read_text(encoding="utf-8"))
                         if e["Kind"] == "Station"]
             renamed = [{"Name": e["Name"], "Tag": e["Tag"].replace("BB.Station.", "Bronze.WorkStation.Type."),
                         "DevComment": e.get("DevComment", "")} for e in stations]
-            (out / "sources" / "registries").mkdir()
-            (out / "sources" / "registries" / "Station.json").write_text(json.dumps(renamed), encoding="utf-8")
+            (out / "Sources" / "registries").mkdir()
+            (out / "Sources" / "registries" / "Station.json").write_text(json.dumps(renamed), encoding="utf-8")
             env = {**os.environ, "DESIGN_EXPORTS_DIR": str(FIXTURE_EXPORTS), "DESIGN_DATA_DIR": str(out)}
             result = run("--build", env=env)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            work = json.loads((out / "basebuilding" / "Work.json").read_text(encoding="utf-8"))
+            work = json.loads((out / "BaseBuilding" / "Work.json").read_text(encoding="utf-8"))
             treat = next(r for r in work if r["Tag"] == "BB.Job.MedicalStation.TreatWounds")
             self.assertEqual(treat["StationTag"], "Bronze.WorkStation.Type.MedicalStation")
         finally:

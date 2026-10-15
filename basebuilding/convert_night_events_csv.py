@@ -28,7 +28,7 @@ from tag_registry import REGISTRY
 from pipeline_common import DATA_DIR, export_csv, blank_to_none, load_csv_rows, parse_int, write_json
 
 CSV_NAME = "Events List - Night Events - Night Events.csv"
-DEST = DATA_DIR / "basebuilding" / "NightEvents.json"
+DEST = DATA_DIR / "BaseBuilding" / "NightEvents.json"
 CHOICES = 3
 _BANDS = ("Low", "Weak", "Normal", "High")
 _AMOUNT = re.compile(r"^(.+?)\s+([+-]?\d+)$")

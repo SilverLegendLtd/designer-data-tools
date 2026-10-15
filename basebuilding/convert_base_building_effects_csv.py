@@ -17,7 +17,7 @@ from tag_registry import REGISTRY
 from pipeline_common import DATA_DIR, export_csv, blank_to_none, load_csv_rows, parse_int_or_none, write_json
 
 CSV_NAME = "Gameplay Effects for Dialogue System - Base Building Effects.csv"
-DEST = DATA_DIR / "basebuilding" / "BaseBuildingEffects.json"
+DEST = DATA_DIR / "BaseBuilding" / "BaseBuildingEffects.json"
 STAT_COLUMNS = ("CheckSkill", "SecondaryCheckSkill", "CheckAttribute",
                 "DurationCheckSkill", "DurationCheckSecondarySkill", "DurationCheckAttribute")
 

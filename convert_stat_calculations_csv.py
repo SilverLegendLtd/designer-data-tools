@@ -26,7 +26,7 @@ import operator
 from pipeline_common import DATA_DIR, STAT_TAGS, blank_to_none, export_csv, load_csv_rows, write_json
 
 SHEET = "Mental & Physical Attributes & Skills - Surviving The Grey Legend"
-OUT = DATA_DIR / "character"
+OUT = DATA_DIR / "Character"
 AXES = ("EI", "SN", "TF", "JP")
 REQUIRED_CONSTANTS = ["BonusTier.Large", "BonusTier.Medium", "BonusTier.Small", "PhysicalAttribute.BaseValue",
                       "PhysicalSkill.BaseValue", "Stat.Min", "Stat.Max", "Mbti.AxisMin", "Mbti.AxisMax"]

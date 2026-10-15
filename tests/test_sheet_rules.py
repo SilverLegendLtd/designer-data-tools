@@ -28,7 +28,7 @@ RESEARCH = f"{sheet_rules.BSW} - Research List"
 def registries() -> sheet_rules.Registries:
     kinds = {"Stat": [{"Tag": e["Tag"], "Name": e["Name"]}
                       for e in json.loads((DATA / "Attribute.json").read_text(encoding="utf-8"))]}
-    for e in json.loads((DATA / "sources" / "BaseBuildingTags.json").read_text(encoding="utf-8")):
+    for e in json.loads((DATA / "Sources" / "BaseBuildingTags.json").read_text(encoding="utf-8")):
         kinds.setdefault(e["Kind"], []).append({"Tag": e["Tag"], "Name": e["Name"], "Aliases": e.get("Aliases", [])})
     with (FIXTURE_EXPORTS / "Background Data - Background.csv").open(encoding="utf-8-sig", newline="") as f:
         kinds["Background"] = [{"Tag": r["Tag"], "Name": r["Name"]} for r in csv.DictReader(f)]
@@ -110,14 +110,14 @@ class ConvertTest(unittest.TestCase):
                 out = tmp / name
                 out.mkdir()
                 shutil.copy(DATA / "Attribute.json", out)
-                shutil.copytree(DATA / "sources", out / "sources")
+                shutil.copytree(DATA / "Sources", out / "Sources")
                 env = {**os.environ, "DESIGN_EXPORTS_DIR": str(exports), "DESIGN_DATA_DIR": str(out)}
                 result = subprocess.run([sys.executable, str(TOOLS / "import_data.py"), "--build"], env=env,
                                         capture_output=True, text=True, encoding="utf-8")
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 outputs[name] = out
             for table in ("Buildings", "Upgrades", "Work", "ResearchTree", "LeisureActivities"):
-                before, after = (json.loads((outputs[n] / "basebuilding" / f"{table}.json").read_text(encoding="utf-8"))
+                before, after = (json.loads((outputs[n] / "BaseBuilding" / f"{table}.json").read_text(encoding="utf-8"))
                                  for n in ("names", "tags"))
                 tag_cols = lambda rows: [{k: v for k, v in r.items() if k.endswith(("Tag", "Tags"))} for r in rows]  # noqa: E731
                 self.assertEqual(tag_cols(before), tag_cols(after), table)

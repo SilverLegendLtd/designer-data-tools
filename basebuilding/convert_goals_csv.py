@@ -23,7 +23,7 @@ from tag_registry import REGISTRY
 from pipeline_common import DATA_DIR, source_file, blank_to_none, load_csv_rows, write_json
 
 CSV_NAME = "Goals.csv"
-DEST = DATA_DIR / "basebuilding" / "Goals.json"
+DEST = DATA_DIR / "BaseBuilding" / "Goals.json"
 _AT_LEAST = re.compile(r"^(Nights|Expansions)\s*>=\s*(\d+)$")
 _MEALS = re.compile(r"^NoMissedMeals\s+Days\s+(\d+)$")
 _ALL_STATS = re.compile(r"^AllStats\s*>=\s*(\w+)$")

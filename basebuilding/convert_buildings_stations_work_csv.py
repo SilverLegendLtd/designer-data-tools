@@ -24,8 +24,8 @@ from pipeline_common import DATA_DIR, export_csv, blank_to_none, load_csv_rows, 
     parse_number_or_item, write_json
 
 CSV_NAME = "Buildings, Stations, Work - Surviving the Grey Legend - New Buildings.csv"
-BUILDINGS_DEST = DATA_DIR / "basebuilding" / "Buildings.json"
-UPGRADES_DEST = DATA_DIR / "basebuilding" / "Upgrades.json"
+BUILDINGS_DEST = DATA_DIR / "BaseBuilding" / "Buildings.json"
+UPGRADES_DEST = DATA_DIR / "BaseBuilding" / "Upgrades.json"
 WORK_TYPES = ("Basic", "Crafting", "ResearchItem", "Research")
 
 _RESOURCE_COLUMNS = {

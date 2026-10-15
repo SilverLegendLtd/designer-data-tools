@@ -10,7 +10,7 @@ from tag_registry import REGISTRY
 from pipeline_common import DATA_DIR, source_file, load_csv_rows, parse_int, write_json
 
 CSV_NAME = "Starting_Resources.csv"
-JSON_DEST = DATA_DIR / "basebuilding" / "StartingResources.json"
+JSON_DEST = DATA_DIR / "BaseBuilding" / "StartingResources.json"
 
 
 def convert() -> int:

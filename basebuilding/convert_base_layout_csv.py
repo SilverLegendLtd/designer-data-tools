@@ -15,7 +15,7 @@ from tag_registry import REGISTRY
 from pipeline_common import DATA_DIR, export_csv, blank_to_none, load_csv_rows, parse_int_or_none, write_json
 
 CSV_NAME = "Buildings, Stations, Work - Surviving the Grey Legend - Base Expansion.csv"
-JSON_DEST = DATA_DIR / "basebuilding" / "BaseLayout.json"
+JSON_DEST = DATA_DIR / "BaseBuilding" / "BaseLayout.json"
 _UNLOCK = re.compile(r"^(.+?) (\d+)$")  # "<track> <n>"; the track resolves to an ExpansionTrack Tag
 
 
