@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Convert the exported "Events List - Night Events - Night Events.csv" to
-design/data/basebuilding/NightEvents.json (CopperGame ideas 0037 / 0039).
+design/data/Bronze/basebuilding/NightEvents.json (CopperGame ideas 0037 / 0039).
 
 One row per event: EventName, Beat, Conditions, Subject, Severity, DeadlineSource,
 Weight, CooldownDays, Once, Title, Text, Choice<n>Label / Cost / Outcomes,

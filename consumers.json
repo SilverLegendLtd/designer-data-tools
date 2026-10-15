@@ -14,10 +14,12 @@
       ]
     },
     "CopperShared": {
-      "root": "../CopperShared",
-      "enabled": false,
+      "root": "../CopperGame/addons/copper_shared",
+      "enabled": true,
       "files": [
-        {"from": "character/Background*.json", "to": "data/character_gen/"}
+        {"from": "character/Background*.json", "to": "data/character_gen/"},
+        {"from": "character/Stat*.json", "to": "data/character_gen/"},
+        {"from": "character/PhysicalBonuses.json", "to": "data/character_gen/"}
       ]
     },
     "CopperLegend": {

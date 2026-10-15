@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert sources/Goals.csv to design/data/basebuilding/Goals.json (CopperGame idea 0045, FI-07):
+"""Convert sources/Goals.csv to design/data/Bronze/basebuilding/Goals.json (CopperGame idea 0045, FI-07):
 the mini-wins and milestones. A hand-maintained input until the designers make a Goals sheet.
 
 One row per goal: GoalName, Kind (MiniWin / Milestone), Requirement, OfferWhen, DreamText,

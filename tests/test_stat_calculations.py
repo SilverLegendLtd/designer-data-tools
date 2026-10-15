@@ -15,7 +15,7 @@ import unittest
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent.parent
-DATA = TOOLS.parent / "design" / "data"
+DATA = TOOLS.parent / "design" / "data" / "Bronze"
 FIXTURE_EXPORTS = Path(__file__).resolve().parent / "fixtures" / "exports"
 SHEET = "Mental & Physical Attributes & Skills - Surviving The Grey Legend"
 
@@ -53,11 +53,42 @@ class StatCalculationsTest(unittest.TestCase):
         result = convert(self.exports, self.out)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         by_tag = {r["Tag"]: r for r in self.table("StatCalculations.json")}
-        self.assertEqual(len(by_tag), 23)
+        self.assertEqual(len(by_tag), 25)  # 23 mental + the Stamina and Health maximums
         self.assertEqual(by_tag["MentalAttribute.Focus"]["Weights"], {"EI": -1, "SN": 0, "TF": 0, "JP": 0})
         self.assertEqual((by_tag["MentalAttribute.Focus"]["Divisor"], by_tag["MentalAttribute.Focus"]["Offset"]), (2, 50))
         self.assertEqual(by_tag["MentalSkill.ResearchAptitude"]["Weights"], {"EI": -1, "SN": 1, "TF": 1, "JP": 0})
         self.assertEqual(by_tag["MentalSkill.ResearchAptitude"]["Divisor"], 6)
+
+    def test_stamina_maximum_weights_endurance(self):
+        convert(self.exports, self.out)
+        stamina = {r["Tag"]: r for r in self.table("StatCalculations.json")}["Stamina"]
+        self.assertEqual((stamina["Kind"], stamina["Timing"]), ("Meter", "Maximum"))
+        self.assertEqual(stamina["StatWeights"], {"PhysicalAttribute.Endurance": 0.5})
+        self.assertEqual((stamina["Divisor"], stamina["Offset"], stamina["Min"], stamina["Max"]), (1, 50, 0, 100))
+        self.assertEqual(set(stamina["Weights"].values()), {0})
+
+    def test_health_maximum_weights_vitality(self):
+        convert(self.exports, self.out)
+        health = {r["Tag"]: r for r in self.table("StatCalculations.json")}["Health"]
+        self.assertEqual((health["Kind"], health["Timing"]), ("Meter", "Maximum"))
+        self.assertEqual(health["StatWeights"], {"PhysicalAttribute.Vitality": 0.5})
+        self.assertEqual((health["Divisor"], health["Offset"], health["Min"], health["Max"]), (1, 50, 0, None))  # no upper limit (D131)
+
+    def test_stats_column_must_name_a_registry_tag_and_match_the_formula(self):
+        def change(rows):
+            header = rows[0]
+            next(r for r in rows if r[0] == "Stamina")[header.index("Stats")] = "PhysicalAttribute.Nonsense=0.5"
+
+        self.edit("Stat Calculations", change)
+        self.assertIn("Stats names 'PhysicalAttribute.Nonsense', not a Tag in Attribute.json", convert(self.exports, self.out).stdout)
+
+        def change_weight(rows):
+            header = rows[0]
+            next(r for r in rows if r[0] == "Stamina")[header.index("Stats")] = "PhysicalAttribute.Endurance=0.4"  # Formula text says * 0.5
+
+        self.setUp()
+        self.edit("Stat Calculations", change_weight)
+        self.assertIn("does not match", convert(self.exports, self.out).stdout)
 
     def test_bonuses_take_their_value_from_the_tier_constants(self):
         convert(self.exports, self.out)

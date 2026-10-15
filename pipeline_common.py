@@ -5,11 +5,11 @@ Inputs:
                 Drive folder `Design/exports`, mirrored to this machine by Drive for desktop.
                 File names are "<Spreadsheet title> - <Tab>.csv". Override with the
                 DESIGN_EXPORTS_DIR environment variable (tests point it at a fixture folder).
-  SOURCES_DIR   hand-maintained inputs that have no sheet yet (design/data/sources/).
-  ATTRIBUTE_JSON  the canonical stat Tag registry (design/data/Attribute.json, designed with
+  SOURCES_DIR   hand-maintained inputs that have no sheet yet (design/data/Bronze/sources/).
+  ATTRIBUTE_JSON  the canonical stat Tag registry (design/data/Bronze/Attribute.json, designed with
                 the Unreal lead).
 Output:
-  DATA_DIR      design/data/ -- the one source of truth every consumer copies from
+  DATA_DIR      design/data/Bronze/ -- the one source of truth every consumer copies from
                 (consumers.json). Never edited by hand.
 """
 
@@ -20,7 +20,7 @@ from pathlib import Path
 
 TOOLS_DIR = Path(__file__).resolve().parent
 GAME_DESIGN_ROOT = TOOLS_DIR.parent
-DATA_DIR = Path(os.environ.get("DESIGN_DATA_DIR", GAME_DESIGN_ROOT / "design" / "data"))
+DATA_DIR = Path(os.environ.get("DESIGN_DATA_DIR", GAME_DESIGN_ROOT / "design" / "data" / "Bronze"))
 SOURCES_DIR = DATA_DIR / "sources"
 DOCS_OUT_DIR = DATA_DIR / "docs"
 EXPORTS_DIR = Path(os.environ.get(
@@ -33,7 +33,7 @@ def export_csv(name: str) -> Path:
 
 
 def source_file(name: str) -> Path:
-    """A hand-maintained input with no sheet yet (design/data/sources/)."""
+    """A hand-maintained input with no sheet yet (design/data/Bronze/sources/)."""
     return SOURCES_DIR / name
 
 
@@ -99,7 +99,7 @@ def parse_number_or_item(value):
     return int(as_float) if as_float.is_integer() else as_float
 
 
-# ---- Stat Tags (design/data/Attribute.json is the canonical registry) ---------
+# ---- Stat Tags (design/data/Bronze/Attribute.json is the canonical registry) ---------
 # Resolving sheet text to Tags lives in basebuilding/tag_registry.py; this only loads the stat rows.
 
 ATTRIBUTE_JSON = DATA_DIR / "Attribute.json"
@@ -120,7 +120,9 @@ def write_stat_tags() -> int:
     Attribute.json row."""
     rows = []
     for e in STAT_TAGS.entries:
-        category, key = e["Tag"].split(".", 1)
+        category, _, key = e["Tag"].rpartition(".") if "." in e["Tag"] else ("", "", e["Tag"])  # bare Tags (Health, Stamina) have no category
+        if category:
+            category, key = e["Tag"].split(".", 1)
         rows.append({"Name": e["Name"], "Tag": e["Tag"], "Category": category, "Key": key,
                      "MinValue": e.get("MinValue"), "MaxValue": e.get("MaxValue")})
     write_json(STAT_TAGS_DEST, rows)

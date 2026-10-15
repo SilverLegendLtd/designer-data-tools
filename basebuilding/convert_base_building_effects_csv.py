@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Convert the exported "Gameplay Effects for Dialogue System - Base Building Effects.csv" to
-design/data/basebuilding/BaseBuildingEffects.json (CopperGame idea 0041).
+design/data/Bronze/basebuilding/BaseBuildingEffects.json (CopperGame idea 0041).
 
 The tab follows CopperLegend's gameplay effect columns (Name, Tag, EffectType, the check and
 duration-check stats, Effects, Arousal, Valence) plus base building's own: WorkTierModifier,

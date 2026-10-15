@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert the exported item lists to design/data/basebuilding/Items.json (eating, CopperGame idea 0040;
+"""Convert the exported item lists to design/data/Bronze/basebuilding/Items.json (eating, CopperGame idea 0040;
 combat items, D118). Both lists live in the spreadsheet "Buildings, Stations, Work - Surviving the Grey
 Legend" (they moved there from the spreadsheet "Items, Food - List" on 2026-10-07):
 

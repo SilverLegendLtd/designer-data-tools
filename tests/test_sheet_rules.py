@@ -19,7 +19,7 @@ sys.path.insert(0, str(TOOLS))
 
 import sheet_rules  # noqa: E402
 
-DATA = TOOLS.parent / "design" / "data"
+DATA = TOOLS.parent / "design" / "data" / "Bronze"
 FIXTURE_EXPORTS = Path(__file__).resolve().parent / "fixtures" / "exports"
 NEW_BUILDINGS = f"{sheet_rules.BSW} - New Buildings"
 RESEARCH = f"{sheet_rules.BSW} - Research List"

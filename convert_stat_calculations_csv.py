@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Convert the three tabs of "Mental & Physical Attributes & Skills - Surviving The Grey Legend"
-into design/data/character/:
+into design/data/Bronze/character/:
 
   Stat Calculations -> StatCalculations.json  the Mental Attributes and Skills as MBTI formulas:
       value = clamp(round((EI*cEI + SN*cSN + TF*cTF + JP*cJP) / Divisor + Offset), Min, Max)
       axes -100..100, positive = E, S, T, J. `Weights` holds the four coefficients.
+      A row may also weight other stats (column `Stats`, "Tag=coefficient; Tag=coefficient"): the
+      sum then adds coefficient * the character's stat (`StatWeights` in the JSON). The Meter rows
+      (Stamina) use this: Timing "Maximum" = the most the meter can hold, not its current value.
   Physical Bonuses  -> PhysicalBonuses.json   the MBTI bonuses, given once at birth (D126 in CopperGame).
       SN / JP / TF hold "+" (axis > 0), "-" (axis < 0) or null (any); an axis at exactly 0 matches
       neither. `Bonus` is the tier's value from the constants. A Tag's bonus is the sum of the
@@ -28,9 +31,10 @@ AXES = ("EI", "SN", "TF", "JP")
 REQUIRED_CONSTANTS = ["BonusTier.Large", "BonusTier.Medium", "BonusTier.Small", "PhysicalAttribute.BaseValue",
                       "PhysicalSkill.BaseValue", "Stat.Min", "Stat.Max", "Mbti.AxisMin", "Mbti.AxisMax"]
 _OPS = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul, ast.Div: operator.truediv}
-# Axis values the Formula text and the coefficients are compared at.
+# Axis and stat values the Formula text and the coefficients are compared at.
 _SAMPLES = [dict(zip(AXES, v)) for v in
             [(0, 0, 0, 0), (100, -100, 37, -61), (-80, 20, -100, 100), (13, 77, -42, -5), (-100, -100, 100, 55)]]
+STAT_SAMPLE_VALUES = (10, 55, 0, 100, 31)  # one per sample; a stat's value is this times its position
 
 
 def _number(text, label, problems):
@@ -43,7 +47,7 @@ def _number(text, label, problems):
 
 
 def _evaluate(formula: str, axes: dict) -> float:
-    """Arithmetic only: + - * / on numbers and the axis names (no eval)."""
+    """Arithmetic only: + - * / on numbers and the axis / stat names (no eval)."""
     def walk(node):
         if isinstance(node, ast.Expression):
             return walk(node.body)
@@ -57,6 +61,18 @@ def _evaluate(formula: str, axes: dict) -> float:
             return axes[node.id]
         raise ValueError(f"unsupported in formula: {ast.dump(node)[:40]}")
     return walk(ast.parse(formula, mode="eval"))
+
+
+def _stat_weights(text: str, where: str, problems: list) -> dict:
+    """'PhysicalAttribute.Endurance=0.5; MentalAttribute.Focus=1' -> {Tag: coefficient}."""
+    weights = {}
+    for part in [p.strip() for p in (text or "").split(";") if p.strip()]:
+        tag, _, coefficient = part.partition("=")
+        tag = tag.strip()
+        if tag not in STAT_TAGS.by_tag:
+            problems.append(f"{where}: Stats names '{tag}', not a Tag in Attribute.json")
+        weights[tag] = _number(coefficient, f"{where} Stats {tag}", problems)
+    return weights
 
 
 def _rows(tab: str):
@@ -99,22 +115,30 @@ def convert_calculations(problems: list) -> int:
         weights = {axis: _number(row.get(axis), f"{where} {axis}", problems) for axis in AXES}
         divisor = _number(row.get("Divisor"), f"{where} Divisor", problems)
         offset = _number(row.get("Offset"), f"{where} Offset", problems)
-        low, high = _number(row.get("Min"), f"{where} Min", problems), _number(row.get("Max"), f"{where} Max", problems)
+        # A blank Min or Max means no limit on that side (Health may go over 100, D131).
+        low = _number(row.get("Min"), f"{where} Min", problems) if (row.get("Min") or "").strip() else None
+        high = _number(row.get("Max"), f"{where} Max", problems) if (row.get("Max") or "").strip() else None
+        stat_weights = _stat_weights(row.get("Stats"), where, problems)
         formula = (row.get("Formula") or "").strip()
         if not divisor:
             problems.append(f"{where}: Divisor is 0")
         elif formula:
             try:
-                for sample in _SAMPLES:
-                    from_weights = sum(weights[a] * sample[a] for a in AXES) / divisor + offset
-                    if abs(_evaluate(formula, sample) - from_weights) > 1e-6:
+                for number, sample in enumerate(_SAMPLES):
+                    # Stats are named in the Formula by the last part of their Tag ("Endurance").
+                    stat_values = {tag.rsplit(".", 1)[-1]: STAT_SAMPLE_VALUES[(number + position) % 5]
+                                   for position, tag in enumerate(stat_weights)}
+                    from_weights = (sum(weights[a] * sample[a] for a in AXES)
+                                    + sum(c * stat_values[t.rsplit(".", 1)[-1]] for t, c in stat_weights.items())) / divisor + offset
+                    if abs(_evaluate(formula, {**sample, **stat_values}) - from_weights) > 1e-6:
                         problems.append(f"{where}: the Formula text '{formula}' does not match the EI/SN/TF/JP "
                                         f"coefficients, Divisor and Offset")
                         break
             except (ValueError, SyntaxError, ZeroDivisionError) as error:
                 problems.append(f"{where}: cannot read the Formula text '{formula}' ({error})")
         out.append({"Tag": tag, "Name": blank_to_none(row.get("Name")), "Kind": blank_to_none(row.get("Kind")),
-                    "Letters": blank_to_none(row.get("Letters")), "Weights": weights, "Divisor": divisor,
+                    "Letters": blank_to_none(row.get("Letters")), "Weights": weights, "StatWeights": stat_weights,
+                    "Divisor": divisor,
                     "Offset": offset, "Min": low, "Max": high, "Timing": blank_to_none(row.get("Timing")),
                     "Formula": formula or None, "Notes": blank_to_none(row.get("Notes"))})
     write_json(OUT / "StatCalculations.json", out)

@@ -14,7 +14,7 @@ import unittest
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent.parent
-DATA = TOOLS.parent / "design" / "data"
+DATA = TOOLS.parent / "design" / "data" / "Bronze"
 FIXTURE_EXPORTS = Path(__file__).resolve().parent / "fixtures" / "exports"
 
 

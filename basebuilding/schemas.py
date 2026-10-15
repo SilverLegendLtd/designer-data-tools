@@ -1,6 +1,6 @@
 """Declared schema (columns + types) for every generated base-building table.
 import_data.py validates every row against it and writes
-design/data/basebuilding/schemas/<Table>.schema.json, the DataTable shape the Unreal
+design/data/Bronze/basebuilding/schemas/<Table>.schema.json, the DataTable shape the Unreal
 port reads (foundation plan F2).
 
 Types: string, int, number_or_item (a number, or the literal "item" or "recipe"),

@@ -9,7 +9,7 @@
 
 Inputs (see pipeline_common.py): sheet CSVs in the Drive exports folder (written by
 apps_script/ExportSheets.gs from export_manifest.json), hand-maintained files in
-design/data/sources/, and design/data/Attribute.json. The build validates every Tag and
+design/data/Bronze/sources/, and design/data/Bronze/Attribute.json. The build validates every Tag and
 every row schema and stops on the first problem, writing nothing to consumers.
 Consumers and their target folders are listed in consumers.json.
 """
