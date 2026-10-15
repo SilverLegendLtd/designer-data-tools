@@ -114,6 +114,8 @@ SCHEMAS = {
                           "columns": {"Tag": "tag:", "Resource": "string", "Amount": "int"}},
     "LevelCurve": {"conventions": {"XpFromPrevious": "Character XP the step from the previous level costs; level 1 costs 0; the last row is the level cap"},
                    "columns": {"Level": "int", "XpFromPrevious": "int", "Title": "string?", "GivesPerk": "bool"}},
+    "JobTitles": {"conventions": {"Titles": "the skill's job titles: option 1 is the base station's, later options follow its upgrades (idea 0054)"},
+                  "columns": {"Skill": "tag:Stat", "Titles": "tag_list:Title"}},
     "BaseLayout": {
         "conventions": {"Id": "each game places the part by its Id (positions are not design data, owner 2026-10-06)",
                         "Unlock": "\"Bunks <n>\" / \"Slot <n>\": the n-th Expand Base choice of that kind opens it; null = from the start",
