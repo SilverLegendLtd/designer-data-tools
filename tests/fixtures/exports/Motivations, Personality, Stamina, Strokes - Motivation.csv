@@ -1,0 +1,16 @@
+Tag,Name,Group,BaseStat,InSlice,AccumulatorSize,Step,Baseline,LowLimit,HighLimit,DistressThreshold,Notes
+Motivation.Need.Survival,Survival,Need,Survival,Yes,5,10,50,0,100,25,PLACEHOLDER step and threshold
+Motivation.Need.WellBeing,Well-Being,Need,Well-Being,Yes,5,10,50,0,100,25,
+Motivation.Need.Safety,Safety,Need,Safety,Yes,5,10,50,0,100,25,
+Motivation.Need.Tech,Tech,Need,Tech,Yes,5,10,50,0,100,25,
+Motivation.Need.Science,Science,Need,Science,Yes,5,10,50,0,100,25,
+Motivation.Need.Unity,Unity,Need,Unity,Yes,5,10,50,0,100,25,
+Motivation.Social.Loyalty,Loyalty,Social,,Yes,3,10,50,0,100,25,Accumulator 3 for Social (D136)
+Motivation.Social.Validation,Validation,Social,,Yes,3,10,50,0,100,25,
+Motivation.Social.Affiliation,Affiliation,Social,,Yes,3,10,50,0,100,25,
+Motivation.Social.Recognition,Recognition,Social,,Yes,3,10,50,0,100,25,
+Motivation.Social.Attachment,Attachment,Social,,No,3,10,50,0,100,25,GDD; not in this slice
+Motivation.Social.Affection,Affection,Social,,No,3,10,50,0,100,25,GDD; not in this slice
+Motivation.Social.Trust,Trust,Social,,No,3,10,50,0,100,25,GDD; not in this slice
+Motivation.Social.Approval,Approval,Social,,No,3,10,50,0,100,25,GDD; not in this slice
+Motivation.Social.Attention,Attention,Social,,No,3,10,50,0,100,25,GDD; not in this slice

@@ -124,6 +124,38 @@ SCHEMAS = {
                     "SizeTag": "tag:LayoutSize?", "Row": "string?", "Order": "int?", "Capacity": "int?", "Unlock": "string?",
                     "UnlockTrackTag": "tag:ExpansionTrack?", "UnlockStep": "int?"},
     },
+    "Stamina": {
+        "conventions": {"Key": "Stamina.*: TiredBelow/TiredClearsAt/ExhaustedBelow/ExhaustedClearsAt/SleepWhileExhaustedShare are shares of the character's max (0..1, SleepWhileExhaustedShare below ExhaustedClearsAt, D136/D137)",
+                       "Value": "the other keys are absolute points; WorkTierPenaltyCap is the lowest total work-tier modifier from effects"},
+        "columns": {"Key": "string", "Value": "number"},
+    },
+    "StaminaDrain": {
+        "conventions": {"Skill": "the Physical Skill a work tick of that skill drains per tick; a Station's own row beats Stamina.DrainPerWorkTick"},
+        "columns": {"Skill": "tag:Stat", "DrainPerTick": "number"},
+    },
+    "Motivations": {
+        "conventions": {"Tag": "Motivation.Need.<Name> / Motivation.Social.<Name> (the GDD's words, so a later dialogue/Unreal mapping is mechanical)",
+                        "BaseStatTag": "the base stat (BB.Buff.*) a Need follows (D63, D94-D96); null for Social motivations",
+                        "InSlice": "Yes = the game runs it this slice (turning one on later is a data change)",
+                        "DistressThreshold": "the accumulator value the motivation's Distressed effect row fires at"},
+        "columns": {"Tag": "tag:Motivation", "Name": "string", "Group": "string", "BaseStat": "string?",
+                    "BaseStatTag": "tag:Buff?", "InSlice": "bool", "AccumulatorSize": "int", "Step": "int",
+                    "Baseline": "int", "LowLimit": "int", "HighLimit": "int", "DistressThreshold": "int"},
+    },
+    "Strokes": {
+        "conventions": {"Source": "BB.StrokeSource.*: the game event that gives the stroke (SIL-1610)",
+                        "Motivation": "null only with Scope CurrentMotivation: the stroke lands on the Need of the base stat that fell/rose (D136)",
+                        "Scope": "Self / Crew (every character) / CurrentMotivation",
+                        "Trait": "null = all characters; else an MBTI letter or SJ/SP/NT/NF (D140)"},
+        "columns": {"Source": "tag:StrokeSource", "Motivation": "tag:Motivation?", "Amount": "int",
+                    "DailyCap": "int?", "Scope": "string", "Trait": "string?"},
+    },
+    "PersonalityModifiers": {
+        "conventions": {"Trait": "an MBTI letter (I/E/S/N/T/F/J/P) or a temperament (SJ/SP/NT/NF): the GDD's per-letter personality effects and Stressor table (D140, idea 0057)",
+                        "Target": "a Motivation Tag or a Stamina key",
+                        "Modifier": "Hunger / Uncaring / DistressThreshold / HighLimit / LowLimit / StrokeSensitivity / AccumulatorSize / Multiplier (the fixed list, idea 0056)"},
+        "columns": {"Trait": "string", "Target": "string", "Modifier": "string", "Amount": "number"},
+    },
 }
 
 

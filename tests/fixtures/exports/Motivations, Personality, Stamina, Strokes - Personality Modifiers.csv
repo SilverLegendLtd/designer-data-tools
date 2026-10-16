@@ -1,0 +1,26 @@
+Trait,Target,Modifier,Amount,Notes
+I,Motivation.Social.Attention,DistressThreshold,-5,GDD Personality Effects on Motivation
+I,Motivation.Social.Attachment,HighLimit,5,GDD Personality Effects on Motivation
+E,Motivation.Social.Recognition,Hunger,10,GDD Personality Effects on Motivation
+E,Motivation.Social.Attention,Hunger,10,GDD Personality Effects on Motivation
+T,Motivation.Social.Validation,DistressThreshold,-5,GDD Personality Effects on Motivation
+F,Motivation.Social.Affection,DistressThreshold,5,GDD Personality Effects on Motivation
+F,Motivation.Social.Validation,DistressThreshold,5,GDD Personality Effects on Motivation
+SJ,Motivation.Social.Affiliation,StrokeSensitivity,1.5,GDD Stressor: Lack of Belonging (Bonus)
+SJ,Motivation.Social.Recognition,StrokeSensitivity,0.75,GDD Stressor: Irresponsibility (Penalty)
+SJ,Motivation.Social.Loyalty,StrokeSensitivity,1.5,GDD Stressor: Instability (Bonus)
+SJ,Motivation.Social.Attachment,StrokeSensitivity,2,GDD Stressor: Abandonment (High Bonus)
+SJ,Motivation.Social.Attention,StrokeSensitivity,1.5,GDD Stressor: Insubordination (Bonus)
+SJ,Motivation.Social.Affection,StrokeSensitivity,1.25,GDD Stressor: Inability to make a contribution (Small Bonus)
+SJ,Motivation.Social.Approval,StrokeSensitivity,1.25,GDD Stressor: Inability to make a contribution (Small Bonus)
+SP,Motivation.Social.Recognition,StrokeSensitivity,1.5,GDD Stressor: Boredom (Bonus)
+SP,Motivation.Social.Attention,StrokeSensitivity,1.5,GDD Stressor: Constraint and Restriction (Bonus)
+SP,Motivation.Social.Approval,StrokeSensitivity,1.5,GDD Stressor: Lack of Impact (Bonus)
+NT,Motivation.Social.Recognition,StrokeSensitivity,2,GDD Stressor: Powerlessness + Stagnation (two Bonuses)
+NT,Motivation.Social.Attention,StrokeSensitivity,1.5,GDD Stressor: Powerlessness (Bonus)
+NT,Motivation.Social.Approval,StrokeSensitivity,1.5,GDD Stressor: Incompetence (Bonus)
+NT,Motivation.Social.Trust,StrokeSensitivity,1.25,GDD Stressor: Lack of Knowledge (Small Bonus)
+NF,Motivation.Social.Loyalty,StrokeSensitivity,1.5,GDD Stressor: Insincerity (Bonus)
+NF,Motivation.Social.Trust,StrokeSensitivity,0.5,GDD Stressor: Betrayal (High Penalty)
+NF,Motivation.Social.Affiliation,StrokeSensitivity,1.5,GDD Stressor: Lack of Integrity (Bonus)
+NF,Motivation.Social.Validation,StrokeSensitivity,1.5,GDD Stressor: Loss of Meaning (Bonus)

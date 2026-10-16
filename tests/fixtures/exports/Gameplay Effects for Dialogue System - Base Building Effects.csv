@@ -5,3 +5,8 @@ Ate Raw Food,GameplayEffect.BaseBuilding.AteRawFood,Negative,Resilience,Stress M
 Sick,GameplayEffect.BaseBuilding.Sick,Negative,Resilience,Stress Management,Vitality,Resilience,Stress Management,Adaptability,,-0.1,-0.2,,Yes,24,Night event Fever in the Night (0039 #1),Suggestion from the event list
 Unmotivated,GameplayEffect.BaseBuilding.Unmotivated,Negative,Resilience,Stress Management,Discipline,Stress Management,Resilience,Discipline,,-0.2,-0.2,-1,No,24,"Night events Harsh Words, Empty Stomachs, Losing Heart (0039)",Suggestion from the event list
 Checked,GameplayEffect.BaseBuilding.Checked,Positive,,,,,,,,0,0.1,,No,168,The weekly check-up (0038 G1), Full protection from Sick for 7 days │
+Tired,GameplayEffect.BaseBuilding.Tired,Negative,,,,,,,,,,,No,,Stamina below the Tired line (D136),Warning only: badge and cause line. Blank duration = while the condition holds
+Exhausted,GameplayEffect.BaseBuilding.Exhausted,Negative,,,,,,,,,,-1,No,,Stamina below the Exhausted line (D136),Replaces Tired. Blank duration = while the condition holds
+Distressed (Validation),GameplayEffect.BaseBuilding.Distressed.Validation,Negative,,,,,,,,,,-1,No,24,Validation below its distress threshold (SIL-1611),PLACEHOLDER duration
+Distressed (Survival),GameplayEffect.BaseBuilding.Distressed.Survival,Negative,,,,,,,,,,-1,No,24,Survival below its distress threshold (SIL-1611),PLACEHOLDER duration
+Distressed (Well-Being),GameplayEffect.BaseBuilding.Distressed.WellBeing,Negative,,,,,,,,,,-1,No,24,Well-Being below its distress threshold (SIL-1611),PLACEHOLDER duration

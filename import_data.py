@@ -98,9 +98,14 @@ SIMPLE_TABLES = [
     ("convert_goals_csv", "Goals", "goals"),
     ("convert_level_curve_csv", "LevelCurve", "levels"),
     ("convert_job_titles_csv", "JobTitles", "job-title skills"),
+    ("convert_stamina_csv", "Stamina", "stamina settings and drain rows"),
+    ("convert_motivations_csv", "Motivations", "motivations"),
+    ("convert_strokes_csv", "Strokes", "strokes"),
+    ("convert_personality_modifiers_csv", "PersonalityModifiers", "personality modifiers"),
 ]
-# Tables written by the Buildings / Stations / Work and Crafting List converters.
-BUILDING_TABLES = ["Buildings", "Upgrades", "Work", "LeisureActivities"]
+# Tables written by the Buildings / Stations / Work and Crafting List converters
+# (convert_stamina_csv also writes StaminaDrain).
+BUILDING_TABLES = ["Buildings", "Upgrades", "Work", "LeisureActivities", "StaminaDrain"]
 
 
 def build_basebuilding() -> None:

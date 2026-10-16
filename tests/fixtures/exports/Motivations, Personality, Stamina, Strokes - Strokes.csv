@@ -1,0 +1,19 @@
+Source,Motivation,Amount,DailyCap,Scope,Trait,Notes
+BB.StrokeSource.WorkCriticalSuccess,Motivation.Social.Validation,1,2,Self,,
+BB.StrokeSource.WorkGood,Motivation.Social.Validation,1,2,Self,,D138
+BB.StrokeSource.WorkFailure,Motivation.Social.Validation,-1,,Self,,No skip while Exhausted (D137)
+BB.StrokeSource.WorkBadlyDone,Motivation.Social.Validation,-1,,Self,,
+BB.StrokeSource.ExhaustedDay,Motivation.Social.Validation,-2,1,Self,,D137: still Exhausted at the end of the workday
+BB.StrokeSource.BuildingFinished,Motivation.Social.Loyalty,1,,Crew,,Building or upgrade finished
+BB.StrokeSource.SharedSlotWorkday,Motivation.Social.Affiliation,1,1,Self,,D57 slot shared with another working Station (D136)
+BB.StrokeSource.SharedLeisure,Motivation.Social.Affiliation,1,,Self,,Leisure with 2+ people
+BB.StrokeSource.GuardDay,Motivation.Social.Recognition,1,1,Self,,
+BB.StrokeSource.LevelUp,Motivation.Social.Recognition,1,,Self,,
+BB.StrokeSource.IdleByChoice,Motivation.Social.Recognition,-1,1,Self,,Free to work and no task by choice (D136)
+BB.StrokeSource.Hungry,Motivation.Need.Survival,-1,,Self,,
+BB.StrokeSource.Starving,Motivation.Need.Survival,-2,,Self,,
+BB.StrokeSource.Sick,Motivation.Need.WellBeing,-2,,Self,,
+BB.StrokeSource.Treated,Motivation.Need.WellBeing,2,,Self,,
+BB.StrokeSource.FedAndRestedDay,Motivation.Need.Survival,1,1,Self,,D138
+BB.StrokeSource.BaseBandFell,,-1,1,CurrentMotivation,,The Need of the stat that fell (Motivations.BaseStat); only characters whose current motivation it is (D136)
+BB.StrokeSource.BaseBandRose,,1,1,CurrentMotivation,,

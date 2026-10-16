@@ -18,6 +18,11 @@
     {"spreadsheet": "Mental & Physical Attributes & Skills - Surviving The Grey Legend", "tab": "Stat Calculations"},
     {"spreadsheet": "Mental & Physical Attributes & Skills - Surviving The Grey Legend", "tab": "Physical Bonuses"},
     {"spreadsheet": "Mental & Physical Attributes & Skills - Surviving The Grey Legend", "tab": "Stat Constants"},
-    {"spreadsheet": "Mental & Physical Attributes & Skills - Surviving The Grey Legend", "tab": "Level-up"}
+    {"spreadsheet": "Mental & Physical Attributes & Skills - Surviving The Grey Legend", "tab": "Level-up"},
+    {"spreadsheet": "Motivations, Personality, Stamina, Strokes", "tab": "Motivation"},
+    {"spreadsheet": "Motivations, Personality, Stamina, Strokes", "tab": "Personality Modifiers"},
+    {"spreadsheet": "Motivations, Personality, Stamina, Strokes", "tab": "Strokes"},
+    {"spreadsheet": "Motivations, Personality, Stamina, Strokes", "tab": "Stamina"},
+    {"spreadsheet": "Motivations, Personality, Stamina, Strokes", "tab": "Stamina Drain"}
   ]
 }

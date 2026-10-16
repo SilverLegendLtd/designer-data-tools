@@ -42,6 +42,7 @@ KIND_PREFIX = {
     "Leisure": "BB.Leisure.", "Setting": "BB.Setting.", "SettingsTab": "BB.SettingsTab.", "Drain": "BB.Drain.", "Band": "BB.Band.", "ItemCategory": "Inventory.Category.", "Effect": "GameplayEffect.BaseBuilding.", "Meal": "BB.Meal.", "Event": "BB.Event.",
     "EventBeat": "BB.EventBeat.", "EventSubject": "BB.EventSubject.", "Severity": "BB.Severity.",
     "Goal": "BB.Goal.", "GoalKind": "BB.GoalKind.", "Title": "BB.Title.",
+    "Motivation": "Motivation.", "StrokeSource": "BB.StrokeSource.",
 }
 _TAG = re.compile(r"^[A-Za-z][A-Za-z0-9]*(\.[A-Za-z0-9]+)+$")
 _STAT_TAG_BARE = re.compile(r"^[A-Za-z][A-Za-z0-9]*$")

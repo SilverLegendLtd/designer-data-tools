@@ -1,6 +1,6 @@
-Tag,Name,Kind,Letters,EI,SN,TF,JP,Divisor,Offset,Min,Max,Timing,Formula,Notes,Stats
+Tag,Name,Kind,Letters,EI,SN,TF,JP,Divisor,Offset,Min,Max,Timing,Formula,Stats,Notes
 MentalAttribute.SocialEnergy,Social Energy,MentalAttribute,E,1,0,0,0,2,50,0,100,Live,(EI + 100) / 2,,
-MentalAttribute.Focus,Focus,MentalAttribute,I,-1,0,0,0,2,50,0,100,Live,(-EI + 100) / 2,Also gets the at-birth bonus in 0052-physical-bonuses.csv (clamped at 100 after),
+MentalAttribute.Focus,Focus,MentalAttribute,I,-1,0,0,0,2,50,0,100,Live,(-EI + 100) / 2,,Also gets the at-birth bonus in 0052-physical-bonuses.csv (clamped at 100 after)
 MentalAttribute.Perception,Perception,MentalAttribute,S,0,1,0,0,2,50,0,100,Live,(SN + 100) / 2,,
 MentalAttribute.Creativity,Creativity,MentalAttribute,N,0,-1,0,0,2,50,0,100,Live,(-SN + 100) / 2,,
 MentalAttribute.Logic,Logic,MentalAttribute,T,0,0,1,0,2,50,0,100,Live,(TF + 100) / 2,,
@@ -22,5 +22,5 @@ MentalSkill.ResearchAptitude,Research Aptitude,MentalSkill,I+S+T,-1,1,1,0,6,50,0
 MentalSkill.OperationalOversight,Operational Oversight,MentalSkill,S+J,0,1,0,1,4,50,0,100,Live,(SN + JP) / 4 + 50,,
 MentalSkill.AttentionToDetail,Attention to Detail,MentalSkill,I+S,-1,1,0,0,4,50,0,100,Live,(-EI + SN) / 4 + 50,,
 MentalSkill.IntuitiveForesight,Intuitive Foresight,MentalSkill,I+N,-1,-1,0,0,4,50,0,100,Live,(-EI - SN) / 4 + 50,,
-Stamina,Stamina,Meter,,0,0,0,0,1,50,0,100,Maximum,50 + Endurance * 0.5,"Maximum Stamina (GDD 2026-10-13); traits and moods are added when they have numbers. The current Stamina is a meter that starts at this maximum, not a formula. Max 100 suggested.",PhysicalAttribute.Endurance=0.5
-Health,Health,Meter,,0,0,0,0,1,50,0,,Maximum,50 + Vitality * 0.5,"Maximum Health (D129): mirror of the Stamina row with Vitality instead of Endurance, so the meters stay distinct. Traits and moods are added later when they have numbers; Background and Life Path already flow through Vitality at birth, do not add them again. The current Health is a meter that starts at this maximum. Max is blank: no upper limit, Health may go over 100 (owner, D131); traits and perks affect it.",PhysicalAttribute.Vitality=0.5
+Stamina,Stamina,Meter,,0,0,0,0,1,50,0,100,Maximum,50 + Endurance * 0.5,PhysicalAttribute.Endurance=0.5,Maximum Stamina (D128). The current Stamina is a meter that starts at this maximum. Max 100 suggested.
+Health,Health,Meter,,0,0,0,0,1,50,0,,Maximum,50 + Vitality * 0.5,PhysicalAttribute.Vitality=0.5,Maximum Health (D129). Blank Max = no upper limit (D131).

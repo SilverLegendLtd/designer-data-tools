@@ -1,0 +1,12 @@
+Key,Value,Notes
+Stamina.TiredBelow,0.5,Share of the character's max (D136)
+Stamina.TiredClearsAt,0.55,Share of max
+Stamina.ExhaustedBelow,0.15,Share of max
+Stamina.ExhaustedClearsAt,0.3,Share of max
+Stamina.SleepPerNight,32,PLACEHOLDER. Restored over a full night
+Stamina.SleepWhileExhaustedShare,0.25,Share of max restored in a night that starts Exhausted; must stay below ExhaustedClearsAt (D137)
+Stamina.DrainPerWorkTick,1,PLACEHOLDER. Default for a station with no Stamina Drain row
+Stamina.RestPerTick,0.5,PLACEHOLDER. The Base leisure activity Rest
+Stamina.RestWeightWhenTired,30,PLACEHOLDER. LeisurePicker weight of Rest while Tired (D139; others weigh 1-30)
+Stamina.RestWeightWhenExhausted,60,PLACEHOLDER
+Stamina.WorkTierPenaltyCap,-2,Lowest total work-tier modifier from effects (SIL-1621 decision C)

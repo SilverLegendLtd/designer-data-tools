@@ -22,6 +22,7 @@ import re
 
 BSW = "Buildings, Stations, Work - Surviving the Grey Legend"
 MPAS = "Mental & Physical Attributes & Skills - Surviving The Grey Legend"
+MPSS = "Motivations, Personality, Stamina, Strokes"
 HOLDERS = ["Station", "Upgrade", "Building"]
 
 
@@ -89,6 +90,20 @@ SHEETS = {
     f"{MPAS} - Stat Calculations": {"skip_blank": "Tag", "columns": {"Tag": _ref("Stat")}},
     f"{MPAS} - Physical Bonuses": {"skip_blank": "Tag", "columns": {"Tag": _ref("Stat")}},
     f"{MPAS} - Level-up": {"skip_blank": "Level", "columns": {}},
+    f"{MPSS} - Motivation": {"skip_blank": "Tag", "columns": {
+        "Tag": _ref("Motivation"), "BaseStat": _ref("Buff")}},
+    f"{MPSS} - Strokes": {"skip_blank": "Source", "columns": {
+        "Source": _ref("StrokeSource"), "Motivation": _ref("Motivation")}},
+    f"{MPSS} - Personality Modifiers": {"skip_blank": "Trait", "columns": {
+        # a Target is a Motivation Tag, or a Stamina key (the converter validates those)
+        "Target": dict(_ref("Motivation"), except_=[
+            "Stamina.TiredBelow", "Stamina.TiredClearsAt", "Stamina.ExhaustedBelow", "Stamina.ExhaustedClearsAt",
+            "Stamina.SleepPerNight", "Stamina.SleepWhileExhaustedShare", "Stamina.DrainPerWorkTick",
+            "Stamina.RestPerTick", "Stamina.RestWeightWhenTired", "Stamina.RestWeightWhenExhausted",
+            "Stamina.WorkTierPenaltyCap"])}},
+    f"{MPSS} - Stamina": {"skip_blank": "Key", "columns": {}},
+    f"{MPSS} - Stamina Drain": {"skip_blank": "Skill", "columns": {
+        "Skill": _ref("Stat")}},
     "Background Data - Background": {"columns": {}, **_BACKGROUND_HEADERS},
     "Background Data - Childhood": _BACKGROUND,
     "Background Data - YoungAdult": _BACKGROUND,
